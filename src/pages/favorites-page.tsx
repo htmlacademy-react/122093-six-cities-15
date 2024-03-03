@@ -1,32 +1,69 @@
+import { Helmet } from 'react-helmet-async';
 import Card from '../components/card';
 import Container from '../components/container';
 import FavoritesLocation from '../components/favorites-location';
+import { Offer } from '../types/offer';
+import FavoritesEmpty from '../components/favorites-empty';
+import Footer from '../components/footer';
 
 type TFavoritesPageProps = {
-  card: {
-    isPremium: boolean;
-    isFavorite: boolean;
-  };
+  offers: Offer[];
+  favoritesCount: Offer[];
 }
 
-export default function FavoritesPage({ card }: TFavoritesPageProps) {
-  return (
-    <Container extraClass = "page--gray page--main" classMain = "page__main--favorites">
-      <div className="page__favorites-container container">
-        <section className="favorites">
-          <h1 className="favorites__title">Saved listing</h1>
-          <ul className="favorites__list">
-            <FavoritesLocation >
-              <Card card={card} cardClass='favorites__card' favoriteClass='favorites__card-info' />
-              <Card card={card} cardClass='favorites__card' favoriteClass='favorites__card-info' />
-            </FavoritesLocation>
+function getFavoritesByLocation(offers: Offer[]) {
+  return offers.reduce<{[key: string]: Offer[]}>((acc, current) => {
+    const location = current.city.name;
+    if (!(location in acc) && current.isFavorite) {
+      acc[location] = [];
+    }
+    if (current.isFavorite) {
+      acc[location].push(current);
+    }
 
-            <FavoritesLocation>
-              <Card card={card} cardClass='favorites__card' favoriteClass='favorites__card-info' />
-            </FavoritesLocation>
-          </ul>
-        </section>
-      </div>
-    </Container>
+    return acc;
+  },{});
+}
+
+function renderFavorites(favorites: {[key: string]: Offer[]}) {
+  const favoritesList = [];
+  for (const cityName in favorites) {
+    favoritesList.push(
+      <FavoritesLocation key={cityName} cityName={cityName}>
+        {favorites[cityName].map((offer) => (
+          <Card key={offer.id} offer={offer}
+            block='favorites'
+            favoriteClass='favorites__card-info'
+            size = 'small'
+            handleCardMouseOver={(id = offer.id) => window.console.log(id)}
+          />
+        ))}
+      </FavoritesLocation>
+    );
+  }
+
+  return favoritesList;
+}
+
+export default function FavoritesPage({ offers, favoritesCount }: TFavoritesPageProps) {
+  const favorites = getFavoritesByLocation(offers);
+  return (
+    <>
+      <Helmet>
+        <title>6 cities. Favorites page</title>
+      </Helmet>
+      {favoritesCount.length ?
+        <Container classMain="page__main--favorites" favoritesCount={favoritesCount} footer = {<Footer />}>
+          <div className="page__favorites-container container">
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {renderFavorites(favorites)}
+              </ul>
+            </section>
+          </div>
+        </Container> :
+        <FavoritesEmpty />}
+    </>
   );
 }
