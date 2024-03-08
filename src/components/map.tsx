@@ -1,16 +1,22 @@
 import {useRef, useEffect} from 'react';
-import {Icon, Marker, layerGroup} from 'leaflet';
+import {Icon, LayerGroup, Marker, layerGroup} from 'leaflet';
 import useMap from '../hooks/use-map';
 import { City } from '../types/city';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../const';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../types/offer';
 
 type MapProps = {
   currentLocation: City;
-  currentOffers: Offer[];
+  currentOffers: Offer[] | null;
   activeOffer: string | undefined;
+  className?: string;
 };
+
+const URL_MARKER_DEFAULT =
+  '../../markup/img/pin.svg';
+
+const URL_MARKER_CURRENT =
+  '../../markup/img/pin-active.svg';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -24,14 +30,22 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({currentLocation, currentOffers, activeOffer}: MapProps): JSX.Element {
+function Map({currentLocation, currentOffers, activeOffer, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentLocation);
+  const markerLayer = useRef<LayerGroup>(layerGroup());
 
   useEffect(() => {
     if (map) {
-      const markerLayer = layerGroup().addTo(map);
-      currentOffers.forEach((currentOffer) => {
+      map.setView([currentLocation.location.latitude, currentLocation.location.longitude], currentLocation.location.zoom);
+      markerLayer.current.addTo(map);
+      markerLayer.current.clearLayers();
+    }
+  }, [currentLocation, map]);
+
+  useEffect(() => {
+    if (map) {
+      currentOffers?.forEach((currentOffer) => {
         const marker = new Marker({
           lat: currentOffer.location.latitude,
           lng: currentOffer.location.longitude
@@ -43,16 +57,12 @@ function Map({currentLocation, currentOffers, activeOffer}: MapProps): JSX.Eleme
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(markerLayer);
+          .addTo(markerLayer.current);
       });
-
-      return () => {
-        map.removeLayer(markerLayer);
-      };
     }
   }, [map, currentOffers, activeOffer]);
 
-  return <div style={{height: '500px'}} ref={mapRef}></div>;
+  return <section className={`map ${className}`} ref={mapRef} />;
 }
 
 export default Map;

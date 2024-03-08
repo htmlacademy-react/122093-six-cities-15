@@ -7,6 +7,7 @@ import LocationsList from '../components/locations-list';
 import { DEFAULT_CITY } from '../const';
 import Map from '../components/map';
 import { City } from '../types/city';
+import OfferSort from '../components/offer-sort';
 
 type TMainPageProps = {
   offers: Offer[];
@@ -29,12 +30,10 @@ export default function MainPage({ offers, favoritesCount }: TMainPageProps) {
       <div className="cities">
         <div className="cities__places-container container">
           {currentOffers.length ?
-            <OffersList offers={currentOffers} currentLocation={currentLocation} handleCardMouseOver={(id) => setActiveCard(id)} /> :
+            <OffersList offers={currentOffers} currentLocation={currentLocation} handleCardMouseOver={(id) => setActiveCard(id)} sort={<OfferSort />} /> :
             <NoOffers currentLocation={currentLocation} />}
           <div className="cities__right-section">
-            <section className="cities__map map">
-              <Map currentOffers={currentOffers} currentLocation={currentLocation} activeOffer={activeCard} />
-            </section>
+            <Map currentOffers={currentOffers} currentLocation={currentLocation} activeOffer={activeCard} className='cities__map' />
           </div>
         </div>
       </div>
