@@ -19,14 +19,14 @@ const offers: Offer[] = [
     city: {
       name: 'Hamburg',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 53.550341,
+        longitude: 10.000654,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
+      latitude: 53.528341000000005,
+      longitude: 9.982654,
       zoom: 16
     },
     goods: [
@@ -72,8 +72,8 @@ const offers: Offer[] = [
       }
     },
     location: {
-      latitude: 48.858610000000006,
-      longitude: 2.330499,
+      latitude: 53.540341000000005,
+      longitude: 10.025654000000001,
       zoom: 16
     },
     goods: [
@@ -111,14 +111,14 @@ const offers: Offer[] = [
     city: {
       name: 'Cologne',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 50.938361,
+        longitude: 6.959974,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.834610000000005,
-      longitude: 2.335499,
+      latitude: 50.917361,
+      longitude: 6.977974,
       zoom: 16
     },
     goods: [
@@ -191,6 +191,58 @@ const offers: Offer[] = [
     rating: 2.6,
     bedrooms: 1,
     maxAdults: 9
+  },
+  {
+    id: '7a63a345-e808-46fa-8b08-eda8e7f495c3',
+    title:'Penthouse, 4-5 rooms + 5 balconies',
+    description: 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
+    type: 'apartment',
+    price: 396,
+    images: [
+      'https://15.design.htmlacademy.pro/static/hotel/2.jpg',
+      'https://15.design.htmlacademy.pro/static/hotel/7.jpg',
+      'https://15.design.htmlacademy.pro/static/hotel/11.jpg',
+      'https://15.design.htmlacademy.pro/static/hotel/5.jpg',
+      'https://15.design.htmlacademy.pro/static/hotel/8.jpg',
+      'https://15.design.htmlacademy.pro/static/hotel/12.jpg'
+    ],
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/2.jpg',
+    city: {
+      name: 'Cologne',
+      location: {
+        latitude: 50.938361,
+        longitude: 6.959974,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 50.930361,
+      longitude: 6.937974,
+      zoom: 16
+    },
+    goods: [
+      'Washing machine',
+      'Washer',
+      'Air conditioning',
+      'Baby seat',
+      'Heating',
+      'Wi-Fi',
+      'Cable TV',
+      'Laptop friendly workspace',
+      'Breakfast',
+      'Towels',
+      'Fridge'
+    ],
+    host: {
+      isPro: true,
+      name: 'Angelina',
+      avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
+    },
+    isPremium: true,
+    isFavorite: false,
+    rating: 4,
+    bedrooms: 2,
+    maxAdults: 10
   }
 ];
 
