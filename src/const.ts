@@ -73,4 +73,8 @@ const CITIES = [
 
 const DEFAULT_CITY = CITIES[0];
 
-export { AppRoute, AuthorizationStatus, RatingsStar, CITIES, DEFAULT_CITY };
+const SORTING_TYPES = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'];
+
+const DEFAULT_SORTING = SORTING_TYPES[0];
+
+export { AppRoute, AuthorizationStatus, RatingsStar, CITIES, DEFAULT_CITY, SORTING_TYPES, DEFAULT_SORTING };

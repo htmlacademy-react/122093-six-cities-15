@@ -13,10 +13,10 @@ type MapProps = {
 };
 
 const URL_MARKER_DEFAULT =
-  '../../markup/img/pin.svg';
+  '../../img/pin.svg';
 
 const URL_MARKER_CURRENT =
-  '../../markup/img/pin-active.svg';
+  '../../img/pin-active.svg';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
