@@ -18,7 +18,7 @@ export default function App({ offers, comments }: AppProps) {
   const favoritesCount = offers?.filter((offer) => offer.isFavorite);
   return (
     <Routes>
-      <Route path={AppRoute.Root} element={<MainPage offers = {offers} favoritesCount = {favoritesCount} />} />
+      <Route path={AppRoute.Root} element={<MainPage favoritesCount = {favoritesCount} />} />
       <Route path={AppRoute.Login} element={<ProtectedRoute unAuthorized><LoginPage /></ProtectedRoute>} />
       <Route path={AppRoute.Favorites} element={<ProtectedRoute><FavoritesPage offers = {offers} favoritesCount = {favoritesCount} /></ProtectedRoute> } />
       <Route path={`${AppRoute.Offer}/:offerId`} element={<OfferPage offers = {offers} comments = {comments} />} />
