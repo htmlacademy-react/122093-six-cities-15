@@ -2,22 +2,24 @@ import { Link } from 'react-router-dom';
 import { Offer } from '../types/offer';
 import { AppRoute } from '../const';
 import { getRatingWidth } from '../utils';
+import { useAppDispatch } from '../hooks';
+import { getActiveOffer } from '../store/action';
 
 type TCardProps = {
   offer: Offer;
   favoriteClass?: string;
   size?: string;
   block: string;
-  handleCardMouseOver: (id: string) => void;
 };
 
 function getImageSize(size: string) {
   return size === 'small' ? {width:'150', height:'110'} : {width:'260', height:'200'};
 }
 
-export default function Card({ offer, favoriteClass, block, size = 'large', handleCardMouseOver }: TCardProps) {
+export default function Card({ offer, favoriteClass, block, size = 'large' }: TCardProps) {
+  const dispatch = useAppDispatch();
   return (
-    <article className={`${block}__card place-card`} onMouseOver={() => handleCardMouseOver(offer.id)}>
+    <article className={`${block}__card place-card`} onMouseOver={() => dispatch(getActiveOffer(offer.id))}>
       {offer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>

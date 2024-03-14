@@ -6,7 +6,6 @@ import { getRatingWidth, isAuthorized } from '../utils';
 import CommentForm from '../components/comment-form';
 import CommentList from '../components/comment-list';
 import Map from '../components/map';
-import { useState } from 'react';
 import Card from '../components/card';
 
 type OfferPageProps = {
@@ -16,7 +15,6 @@ type OfferPageProps = {
 
 export default function OfferPage({offers, comments}: OfferPageProps) {
   const { offerId } = useParams();
-  const [activeCard, setActiveCard] = useState(offerId);
   const offerDetail = offers.find((offer) => offer.id === offerId) as Offer;
   const currentOffers = offers.filter((offer) => offer.city.name === offerDetail.city.name);
   return (
@@ -111,7 +109,7 @@ export default function OfferPage({offers, comments}: OfferPageProps) {
             </section>
           </div>
         </div>
-        <Map currentOffers={currentOffers} currentLocation={offerDetail.city} activeOffer={activeCard} className='offer__map' />
+        <Map currentOffers={currentOffers} currentLocation={offerDetail.city} className='offer__map' />
       </section>
       <div className="container">
         <section className="near-places places">
@@ -121,7 +119,6 @@ export default function OfferPage({offers, comments}: OfferPageProps) {
               <Card key={offer.id}
                 offer={offer}
                 block='near-places'
-                handleCardMouseOver={(id = offer.id) => setActiveCard(id)}
               />
             ))}
           </div>

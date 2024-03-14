@@ -4,19 +4,19 @@ import useMap from '../hooks/use-map';
 import { City } from '../types/city';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../types/offer';
+import { useAppSelector } from '../hooks';
 
 type MapProps = {
   currentLocation: City;
   currentOffers: Offer[] | null;
-  activeOffer: string | undefined;
   className?: string;
 };
 
 const URL_MARKER_DEFAULT =
-  '../../markup/img/pin.svg';
+  '../../img/pin.svg';
 
 const URL_MARKER_CURRENT =
-  '../../markup/img/pin-active.svg';
+  '../../img/pin-active.svg';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -30,7 +30,8 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({currentLocation, currentOffers, activeOffer, className}: MapProps): JSX.Element {
+function Map({currentLocation, currentOffers, className}: MapProps): JSX.Element {
+  const activeOffer = useAppSelector((state) => state.activeOffer);
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentLocation);
   const markerLayer = useRef<LayerGroup>(layerGroup());

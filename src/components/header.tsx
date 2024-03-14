@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { isAuthorized } from '../utils';
-import { Offer } from '../types/offer';
+import { useAppSelector } from '../hooks';
 
 type THeaderProps = {
   classMain?: string;
-  favoritesCount?: Offer[];
 }
 
-export default function Header({ classMain, favoritesCount }: THeaderProps) {
+export default function Header({ classMain }: THeaderProps) {
+  const favoritesCount = useAppSelector((state) => state.favoritesCount);
   return (
     <header className="header">
       <div className="container">
@@ -28,7 +28,7 @@ export default function Header({ classMain, favoritesCount }: THeaderProps) {
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                      <span className="header__favorite-count">{favoritesCount?.length}</span>
+                      <span className="header__favorite-count">{favoritesCount}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">

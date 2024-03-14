@@ -5,10 +5,10 @@ import FavoritesLocation from '../components/favorites-location';
 import { Offer } from '../types/offer';
 import FavoritesEmpty from '../components/favorites-empty';
 import Footer from '../components/footer';
+import { useAppSelector } from '../hooks';
 
 type TFavoritesPageProps = {
   offers: Offer[];
-  favoritesCount: Offer[];
 }
 
 function getFavoritesByLocation(offers: Offer[]) {
@@ -35,7 +35,6 @@ function renderFavorites(favorites: {[key: string]: Offer[]}) {
             block='favorites'
             favoriteClass='favorites__card-info'
             size = 'small'
-            handleCardMouseOver={(id = offer.id) => window.console.log(id)}
           />
         ))}
       </FavoritesLocation>
@@ -45,15 +44,16 @@ function renderFavorites(favorites: {[key: string]: Offer[]}) {
   return favoritesList;
 }
 
-export default function FavoritesPage({ offers, favoritesCount }: TFavoritesPageProps) {
+export default function FavoritesPage({ offers }: TFavoritesPageProps) {
+  const favoritesCount = useAppSelector((state) => state.favoritesCount);
   const favorites = getFavoritesByLocation(offers);
   return (
     <>
       <Helmet>
         <title>6 cities. Favorites page</title>
       </Helmet>
-      {favoritesCount.length ?
-        <Container classMain="page__main--favorites" favoritesCount={favoritesCount} footer = {<Footer />}>
+      {favoritesCount ?
+        <Container classMain="page__main--favorites" footer = {<Footer />}>
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>

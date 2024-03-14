@@ -73,4 +73,13 @@ const CITIES = [
 
 const DEFAULT_CITY = CITIES[0];
 
-export { AppRoute, AuthorizationStatus, RatingsStar, CITIES, DEFAULT_CITY };
+const SORT_TYPES = {
+  popular: 'Popular',
+  priceLowToHigh: 'Price: low to high',
+  priceHighToLow: 'Price: high to low',
+  topRatedFirst: 'Top rated first'
+};
+
+const DEFAULT_SORT_TYPE = SORT_TYPES.popular;
+
+export { AppRoute, AuthorizationStatus, RatingsStar, CITIES, DEFAULT_CITY, SORT_TYPES, DEFAULT_SORT_TYPE };
