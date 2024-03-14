@@ -8,21 +8,22 @@ import Map from '../components/map';
 import { City } from '../types/city';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { getOffersByCity } from '../store/action';
+import { DEFAULT_SORT_TYPE } from '../const';
 
 type TMainPageProps = {
   favoritesCount: Offer[];
 };
 
 export default function MainPage({ favoritesCount }: TMainPageProps) {
-  const [activeCard, setActiveCard] = useState('');
+  const [activeSortType, setActiveSortType] = useState(DEFAULT_SORT_TYPE);
 
   const currentLocation = useAppSelector((state) => state.city);
-  const curOffs = useAppSelector((state) => state.offers);
-  const currentOffers = curOffs.filter((offer) => offer.city.name === currentLocation.name);
+  const currentOffers = useAppSelector((state) => state.sortedOffers);
   const dispatch = useAppDispatch();
 
   const handleLocationClick = (location: City) => {
     dispatch(getOffersByCity(location));
+    setActiveSortType(DEFAULT_SORT_TYPE);
   };
 
   return (
@@ -33,11 +34,11 @@ export default function MainPage({ favoritesCount }: TMainPageProps) {
       </div>
       <div className="cities">
         <div className="cities__places-container container">
-          {curOffs.length ?
-            <OffersList offers={currentOffers} currentLocation={currentLocation} handleCardMouseOver={(id) => setActiveCard(id)} /> :
+          {currentOffers.length ?
+            <OffersList offers={currentOffers} currentLocation={currentLocation} activeSortType={activeSortType} onSortTypeClick={(sortType) => setActiveSortType(sortType)} /> :
             <NoOffers currentLocation={currentLocation} />}
           <div className="cities__right-section">
-            <Map currentOffers={currentOffers} currentLocation={currentLocation} activeOffer={activeCard} className='cities__map' />
+            <Map currentOffers={currentOffers} currentLocation={currentLocation} className='cities__map' />
           </div>
         </div>
       </div>
