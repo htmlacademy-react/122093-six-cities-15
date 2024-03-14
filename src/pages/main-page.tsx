@@ -1,5 +1,4 @@
 import Container from '../components/container';
-import { Offer } from '../types/offer';
 import OffersList from '../components/offers-list';
 import { useState } from 'react';
 import NoOffers from '../components/no-offers';
@@ -10,11 +9,7 @@ import { useAppSelector, useAppDispatch } from '../hooks';
 import { getOffersByCity } from '../store/action';
 import { DEFAULT_SORT_TYPE } from '../const';
 
-type TMainPageProps = {
-  favoritesCount: Offer[];
-};
-
-export default function MainPage({ favoritesCount }: TMainPageProps) {
+export default function MainPage() {
   const [activeSortType, setActiveSortType] = useState(DEFAULT_SORT_TYPE);
 
   const currentLocation = useAppSelector((state) => state.city);
@@ -27,7 +22,7 @@ export default function MainPage({ favoritesCount }: TMainPageProps) {
   };
 
   return (
-    <Container extraClass = "page--gray page--main" classMain = "page__main--index" favoritesCount = {favoritesCount}>
+    <Container extraClass = "page--gray page--main" classMain = "page__main--index" >
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <LocationsList currentLocation={currentLocation} getCurrentLocation={handleLocationClick} />
@@ -35,7 +30,11 @@ export default function MainPage({ favoritesCount }: TMainPageProps) {
       <div className="cities">
         <div className="cities__places-container container">
           {currentOffers.length ?
-            <OffersList offers={currentOffers} currentLocation={currentLocation} activeSortType={activeSortType} onSortTypeClick={(sortType) => setActiveSortType(sortType)} /> :
+            <OffersList offers={currentOffers}
+              currentLocation={currentLocation}
+              activeSortType={activeSortType}
+              onSortTypeClick={(sortType) => setActiveSortType(sortType)}
+            /> :
             <NoOffers currentLocation={currentLocation} />}
           <div className="cities__right-section">
             <Map currentOffers={currentOffers} currentLocation={currentLocation} className='cities__map' />
