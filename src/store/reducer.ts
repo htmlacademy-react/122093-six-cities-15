@@ -1,22 +1,50 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DEFAULT_CITY } from '../const';
-import { getActiveOffer, getFavoritesCount, getOffersByCity, getSortedOffers } from './action';
+import { getActiveOffer, getFavoritesCount, getSelectedCity, getSortedOffers, loadNearOffersById, loadOfferById, loadOffers, setActualOfferLoadingStatus } from './action';
 import offers from '../mocks/offers';
+import { City } from '../types/city';
+import { Offer } from '../types/offer';
 
-const initialState = {
+type InitialState = {
+  city: City;
+  offers: Offer[];
+  sortedOffers: Offer[];
+  activeOffer: Offer['id'];
+  favoritesCount: number;
+  offerDetail: Offer;
+  nearOffers: Offer[];
+  isDataLoading: boolean;
+};
+
+const initialState: InitialState = {
   city: DEFAULT_CITY,
-  offers,
-  sortedOffers: offers.filter((offer) => offer.city.name === DEFAULT_CITY.name),
+  offers: [],
+  sortedOffers: [],
   activeOffer: '',
   favoritesCount: offers.filter((offer) => offer.isFavorite).length,
+  offerDetail: <Offer>{},
+  nearOffers: [],
+  isDataLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(getOffersByCity, (state, action) => {
+    .addCase(getSelectedCity, (state, action) => {
       state.city = action.payload;
-      state.offers = offers.filter((offer) => offer.city.name === action.payload.name);
-      state.sortedOffers = offers.filter((offer) => offer.city.name === action.payload.name);
+      state.sortedOffers = state.offers.filter((offer) => offer.city.name === state.city.name);
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
+      state.sortedOffers = action.payload.filter((offer) => offer.city.name === state.city.name);
+    })
+    .addCase(loadOfferById, (state, action) => {
+      state.offerDetail = action.payload;
+    })
+    .addCase(setActualOfferLoadingStatus, (state, action) => {
+      state.isDataLoading = action.payload;
+    })
+    .addCase(loadNearOffersById, (state, action) => {
+      state.nearOffers = action.payload;
     })
     .addCase(getSortedOffers, (state, action) => {
       state.sortedOffers = action.payload;

@@ -80,6 +80,12 @@ const SORT_TYPES = {
   topRatedFirst: 'Top rated first'
 };
 
+enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout'
+}
+
 const DEFAULT_SORT_TYPE = SORT_TYPES.popular;
 
-export { AppRoute, AuthorizationStatus, RatingsStar, CITIES, DEFAULT_CITY, SORT_TYPES, DEFAULT_SORT_TYPE };
+export { AppRoute, AuthorizationStatus, RatingsStar, CITIES, DEFAULT_CITY, SORT_TYPES, DEFAULT_SORT_TYPE, APIRoute };

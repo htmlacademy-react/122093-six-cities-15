@@ -4,6 +4,8 @@ import { AppRoute } from '../const';
 import { getRatingWidth } from '../utils';
 import { useAppDispatch } from '../hooks';
 import { getActiveOffer } from '../store/action';
+import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '../store/api-actions';
+import { store } from '../store';
 
 type TCardProps = {
   offer: Offer;
@@ -18,6 +20,10 @@ function getImageSize(size: string) {
 
 export default function Card({ offer, favoriteClass, block, size = 'large' }: TCardProps) {
   const dispatch = useAppDispatch();
+  const handleCardClick = () => {
+    store.dispatch(fetchOfferByIdAction(offer.id));
+    store.dispatch(fetchNearOffersByIdAction(offer.id));
+  };
   return (
     <article className={`${block}__card place-card`} onMouseOver={() => dispatch(getActiveOffer(offer.id))}>
       {offer.isPremium &&
@@ -25,7 +31,7 @@ export default function Card({ offer, favoriteClass, block, size = 'large' }: TC
         <span>Premium</span>
       </div>}
       <div className={`${block}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Offer}/${offer.id}`}>
+        <Link to={`${AppRoute.Offer}/${offer.id}`} onClick={handleCardClick}>
           <img className="place-card__image" src={offer.previewImage} {...getImageSize(size)} alt="Place image"/>
         </Link>
       </div>
@@ -49,7 +55,7 @@ export default function Card({ offer, favoriteClass, block, size = 'large' }: TC
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${offer.id}`}>{offer.title}</Link>
+          <Link to={`${AppRoute.Offer}/${offer.id}`} onClick={handleCardClick}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
