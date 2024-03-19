@@ -88,4 +88,13 @@ enum APIRoute {
 
 const DEFAULT_SORT_TYPE = SORT_TYPES.popular;
 
-export { AppRoute, AuthorizationStatus, RatingsStar, CITIES, DEFAULT_CITY, SORT_TYPES, DEFAULT_SORT_TYPE, APIRoute };
+export {
+  AppRoute,
+  AuthorizationStatus,
+  RatingsStar,
+  CITIES,
+  DEFAULT_CITY,
+  SORT_TYPES,
+  DEFAULT_SORT_TYPE,
+  APIRoute,
+};

@@ -7,8 +7,11 @@ import offers from './mocks/offers';
 import comments from './mocks/comments';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { fetchOffersAction } from './store/api-actions';
+import { checkAuthAction, fetchOffersAction } from './store/api-actions';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
+store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
@@ -20,6 +23,7 @@ root.render(
     <HelmetProvider>
       <BrowserRouter>
         <Provider store={store}>
+          <ToastContainer />
           <App offers={offers} comments={comments} />
         </Provider>
       </BrowserRouter>

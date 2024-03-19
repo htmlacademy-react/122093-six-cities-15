@@ -1,6 +1,6 @@
 import Container from '../components/container';
 import { Comment } from '../types/comment';
-import { getRatingWidth, isAuthorized } from '../utils';
+import { getRatingWidth } from '../utils';
 import CommentForm from '../components/comment-form';
 import CommentList from '../components/comment-list';
 import Map from '../components/map';
@@ -8,6 +8,7 @@ import Card from '../components/card';
 import { useAppSelector } from '../hooks';
 import Loader from '../components/loader/loader';
 import { Offer } from '../types/offer';
+import { AuthorizationStatus } from '../const';
 
 const MAX_NEAR_OFFERS = 3;
 
@@ -33,6 +34,7 @@ type OfferPageProps = {
 }
 
 export default function OfferPage({comments}: OfferPageProps) {
+  const isAuthorized = useAppSelector((state) =>state.authorizationStatus === AuthorizationStatus.Auth);
   const isLoading = useAppSelector((state) => state.isDataLoading);
   const offerDetail = useAppSelector((state) => state.offerDetail);
   const nearOffers = useAppSelector((state) => state.nearOffers);
