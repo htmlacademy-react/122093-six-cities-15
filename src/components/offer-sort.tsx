@@ -12,7 +12,9 @@ type TOfferSortType = {
 
 export default function OfferSort({activeSortType, onSortTypeClick, currentOffers}: TOfferSortType) {
   const [isSortBarOpened, setSortBarOpened] = useState(false);
-  const offersDefault = useAppSelector((state) => state.offers);
+  const currentCity = useAppSelector((state) =>state.city.name);
+  const offers = useAppSelector((state) => state.offers);
+  const offersDefault = offers.filter((offer) => offer.city.name === currentCity);
   const dispatch = useAppDispatch();
   const isSortOpened = () => isSortBarOpened ? 'places__options--opened' : '';
   const isSortActive = (sortType: string) => activeSortType === sortType ? 'places__option--active' : '';

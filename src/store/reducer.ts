@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY } from '../const';
-import { getActiveOffer, getFavoritesCount, getSelectedCity, getSortedOffers, loadNearOffersById, loadOfferById, loadOffers, setActualOfferLoadingStatus } from './action';
+import { AuthorizationStatus, DEFAULT_CITY } from '../const';
+import { getActiveOffer, getFavoritesCount, getSelectedCity, getSortedOffers, loadNearOffersById, loadOfferById, loadOffers, setActualOfferLoadingStatus, setAuthorizationStatus } from './action';
 import offers from '../mocks/offers';
 import { City } from '../types/city';
 import { Offer } from '../types/offer';
@@ -14,6 +14,7 @@ type InitialState = {
   offerDetail: Offer;
   nearOffers: Offer[];
   isDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
 };
 
 const initialState: InitialState = {
@@ -25,6 +26,7 @@ const initialState: InitialState = {
   offerDetail: <Offer>{},
   nearOffers: [],
   isDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -54,6 +56,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getFavoritesCount, (state, action) => {
       state.favoritesCount = action.payload;
+    })
+    .addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 

@@ -1,14 +1,21 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../const';
-import { isAuthorized } from '../utils';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks';
+import { store } from '../store';
+import { logoutAction } from '../store/api-actions';
 
 type THeaderProps = {
   classMain?: string;
 }
 
 export default function Header({ classMain }: THeaderProps) {
+  const isAuthorized = useAppSelector((state) =>state.authorizationStatus === AuthorizationStatus.Auth);
   const favoritesCount = useAppSelector((state) => state.favoritesCount);
+
+  const handleSignOutClick = () => {
+    store.dispatch(logoutAction());
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -32,9 +39,9 @@ export default function Header({ classMain }: THeaderProps) {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                    <Link className="header__nav-link" to="#" onClick={handleSignOutClick}>
                       <span className="header__signout">Sign out</span>
-                    </a>
+                    </Link>
                   </li>
                 </> :
                 <li className="header__nav-item user">
