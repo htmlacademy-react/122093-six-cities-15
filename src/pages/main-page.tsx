@@ -1,26 +1,22 @@
-import Container from '../components/container';
-import OffersList from '../components/offers-list';
-import { useState } from 'react';
-import NoOffers from '../components/no-offers';
-import LocationsList from '../components/locations-list';
-import Map from '../components/map';
+import Container from '../components/container/container';
+import OffersList from '../components/offers-list/offers-list';
+import NoOffers from '../components/no-offers/no-offers';
+import LocationsList from '../components/locations-list/locations-list';
+import Map from '../components/map/map';
 import { City } from '../types/city';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { getSelectedCity } from '../store/action';
-import { DEFAULT_SORT_TYPE } from '../const';
 import Loader from '../components/loader/loader';
 
 export default function MainPage() {
   const isLoading = useAppSelector((state) =>state.isDataLoading);
-  const [activeSortType, setActiveSortType] = useState(DEFAULT_SORT_TYPE);
-
   const currentLocation = useAppSelector((state) => state.city);
-  const currentOffers = useAppSelector((state) => state.sortedOffers);
+  const offers = useAppSelector((state) => state.offers);
+  const currentOffers = offers.filter((offer) => offer.city.name === currentLocation.name);
   const dispatch = useAppDispatch();
 
   const handleLocationClick = (location: City) => {
     dispatch(getSelectedCity(location));
-    setActiveSortType(DEFAULT_SORT_TYPE);
   };
 
   return (
@@ -34,10 +30,8 @@ export default function MainPage() {
         <div className="cities">
           <div className="cities__places-container container">
             {currentOffers.length ?
-              <OffersList offers={currentOffers}
+              <OffersList currentOffers={currentOffers}
                 currentLocation={currentLocation}
-                activeSortType={activeSortType}
-                onSortTypeClick={(sortType) => setActiveSortType(sortType)}
               /> :
               <NoOffers currentLocation={currentLocation} />}
             <div className="cities__right-section">

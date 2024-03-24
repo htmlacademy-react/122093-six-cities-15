@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Location, Navigate, useLocation } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../const';
-import { useAppSelector } from '../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
 
 type TProtectedRouteProps = {
   children: ReactNode;

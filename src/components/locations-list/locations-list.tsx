@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { CITIES } from '../const';
+import { CITIES } from '../../const';
 import { SyntheticEvent } from 'react';
-import { City } from '../types/city';
+import { City } from '../../types/city';
 
 type TLocationsListProps = {
   currentLocation: City;
