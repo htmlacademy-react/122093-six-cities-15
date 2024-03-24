@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import Container from '../components/container';
+import Container from '../components/container/container';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 

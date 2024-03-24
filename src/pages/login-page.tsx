@@ -1,11 +1,12 @@
 import { FormEvent, useRef } from 'react';
-import Container from '../components/container';
+import Container from '../components/container/container';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch } from '../hooks';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loginAction } from '../store/api-actions';
-import { AppRoute } from '../const';
+import { AppRoute, CITIES } from '../const';
 import { getToken } from '../services/token';
+import { getSelectedCity } from '../store/action';
 
 export default function LoginPage() {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -24,6 +25,14 @@ export default function LoginPage() {
       }));
     }
   };
+
+  const getRandomCity = () => CITIES[Math.floor(Math.random() * CITIES.length)];
+  const randomCity = getRandomCity();
+
+  const handleLocationClick = () => {
+    dispatch(getSelectedCity(randomCity));
+  };
+
   return (
     <>
       <Helmet>
@@ -47,9 +56,9 @@ export default function LoginPage() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Root} onClick={handleLocationClick}>
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>

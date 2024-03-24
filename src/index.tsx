@@ -4,7 +4,6 @@ import App from './app';
 import {BrowserRouter} from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import offers from './mocks/offers';
-import comments from './mocks/comments';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { checkAuthAction, fetchOffersAction } from './store/api-actions';
@@ -24,7 +23,7 @@ root.render(
       <BrowserRouter>
         <Provider store={store}>
           <ToastContainer />
-          <App offers={offers} comments={comments} />
+          <App offers={offers} />
         </Provider>
       </BrowserRouter>
     </HelmetProvider>

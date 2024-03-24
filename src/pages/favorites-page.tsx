@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import Card from '../components/card';
-import Container from '../components/container';
-import FavoritesLocation from '../components/favorites-location';
+import Card from '../components/card/card';
+import Container from '../components/container/container';
+import FavoritesLocation from '../components/favorites-location/favorites-location';
 import { Offer } from '../types/offer';
-import FavoritesEmpty from '../components/favorites-empty';
-import Footer from '../components/footer';
+import FavoritesEmpty from '../components/favorites-empty/favorites-empty';
+import Footer from '../components/footer/footer';
 import { useAppSelector } from '../hooks';
 
 type TFavoritesPageProps = {

@@ -74,19 +74,20 @@ const CITIES = [
 const DEFAULT_CITY = CITIES[0];
 
 const SORT_TYPES = {
-  popular: 'Popular',
-  priceLowToHigh: 'Price: low to high',
-  priceHighToLow: 'Price: high to low',
-  topRatedFirst: 'Top rated first'
+  Popular: 'Popular',
+  PriceLowToHigh: 'Price: low to high',
+  PriceHighToLow: 'Price: high to low',
+  TopRatedFirst: 'Top rated first'
 };
 
 enum APIRoute {
   Offers = '/offers',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout'
 }
 
-const DEFAULT_SORT_TYPE = SORT_TYPES.popular;
+const DEFAULT_SORT_TYPE = SORT_TYPES.Popular;
 
 export {
   AppRoute,

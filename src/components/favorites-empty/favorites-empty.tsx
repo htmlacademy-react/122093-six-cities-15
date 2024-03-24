@@ -1,5 +1,5 @@
-import Container from './container';
-import Footer from './footer';
+import Container from '../container/container';
+import Footer from '../footer/footer';
 
 export default function FavoritesEmpty() {
   return (
