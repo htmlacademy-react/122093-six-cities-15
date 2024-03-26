@@ -5,7 +5,6 @@ import FavoritesLocation from '../components/favorites-location/favorites-locati
 import { Offer } from '../types/offer';
 import FavoritesEmpty from '../components/favorites-empty/favorites-empty';
 import Footer from '../components/footer/footer';
-import { useAppSelector } from '../hooks';
 
 type TFavoritesPageProps = {
   offers: Offer[];
@@ -45,7 +44,7 @@ function renderFavorites(favorites: {[key: string]: Offer[]}) {
 }
 
 export default function FavoritesPage({ offers }: TFavoritesPageProps) {
-  const favoritesCount = useAppSelector((state) => state.favoritesCount);
+  const favoritesCount = 3;
   const favorites = getFavoritesByLocation(offers);
   return (
     <>

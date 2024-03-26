@@ -1,7 +1,10 @@
 import { ReactNode } from 'react';
 import { Location, Navigate, useLocation } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, RequestStatus } from '../../const';
+import useAuth from '../../hooks/use-auth';
 import { useAppSelector } from '../../hooks';
+import { authSelectors } from '../../store/slices/auth';
+import Loader from '../loader/loader';
 
 type TProtectedRouteProps = {
   children: ReactNode;
@@ -15,8 +18,13 @@ type LocationState = {
 }
 
 export default function ProtectedRoute({ unAuthorized, children }: TProtectedRouteProps) {
-  const isAuthorized = useAppSelector((state) =>state.authorizationStatus === AuthorizationStatus.Auth);
+  const isAuthorized = useAuth();
+  const status = useAppSelector(authSelectors.authStatus);
   const location = useLocation() as Location<LocationState>;
+
+  if (status === RequestStatus.Loading) {
+    return <Loader />;
+  }
 
   if (unAuthorized && isAuthorized) {
     const from = location.state?.from || { pathname: AppRoute.Root };

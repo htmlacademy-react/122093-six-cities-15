@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { getRatingWidth } from '../../utils';
+import { commentsSelectors } from '../../store/slices/comments';
 
 const DEFAULT_COMMENT_COUNT = 10;
 
 export default function CommentList() {
   const [buttonShow, setButtonShow] = useState(false);
   const [renderedCommentsCount, setRenderedCommentsCount] = useState(DEFAULT_COMMENT_COUNT);
-  const initialComments = useAppSelector((state) =>state.comments);
+  const initialComments = useAppSelector(commentsSelectors.comments);
   const sortedComments = initialComments.toSorted(({date: a}, {date: b}) => a < b ? 1 : -1);
   let commentCounter = 0;
 

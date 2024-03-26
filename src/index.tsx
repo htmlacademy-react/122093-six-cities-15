@@ -6,9 +6,10 @@ import { HelmetProvider } from 'react-helmet-async';
 import offers from './mocks/offers';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { checkAuthAction, fetchOffersAction } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
+import { checkAuthAction } from './store/thunks/auth';
+import { fetchOffersAction } from './store/thunks/offers';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());

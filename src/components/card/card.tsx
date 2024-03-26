@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 import { AppRoute } from '../../const';
 import { getRatingWidth } from '../../utils';
 import { useAppDispatch } from '../../hooks';
-import { getActiveOffer } from '../../store/action';
+import { offersActions } from '../../store/slices/offers';
 
 type TCardProps = {
   offer: Offer;
@@ -20,7 +20,7 @@ export default function Card({ offer, favoriteClass, block, size = 'large' }: TC
   const dispatch = useAppDispatch();
 
   return (
-    <article className={`${block}__card place-card`} onMouseOver={() => dispatch(getActiveOffer(offer.id))}>
+    <article className={`${block}__card place-card`} onMouseOver={() => dispatch(offersActions.setActiveOfferId(offer.id))}>
       {offer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>

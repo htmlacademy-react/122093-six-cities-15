@@ -89,6 +89,13 @@ enum APIRoute {
 
 const DEFAULT_SORT_TYPE = SORT_TYPES.Popular;
 
+enum RequestStatus {
+  Idle,
+  Loading,
+  Success,
+  Failed
+}
+
 export {
   AppRoute,
   AuthorizationStatus,
@@ -98,4 +105,5 @@ export {
   SORT_TYPES,
   DEFAULT_SORT_TYPE,
   APIRoute,
+  RequestStatus,
 };

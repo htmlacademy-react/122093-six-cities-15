@@ -1,20 +1,26 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import RatingStar from '../rating-star/rating-star';
-import { store } from '../../store';
-import { addNewCommentAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
+import { addNewCommentAction } from '../../store/thunks/comments';
+
+type CommentFormProps = {
+  offerId: string;
+}
 
 const MIN_CHARACTERS = 50;
 const MAX_CHARACTERS = 300;
 
-export default function CommentForm() {
+export default function CommentForm({offerId}: CommentFormProps) {
   const [form, setForm] = useState({
     comment: '',
     rating: 0,
   });
 
+  const dispatch = useAppDispatch();
+
   const handleSubmitClick = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    store.dispatch(addNewCommentAction(form));
+    dispatch(addNewCommentAction({offerId, ...form}));
     setForm({comment: '', rating: 0,});
   };
 
