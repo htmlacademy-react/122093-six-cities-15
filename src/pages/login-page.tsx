@@ -3,10 +3,10 @@ import Container from '../components/container/container';
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch } from '../hooks';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginAction } from '../store/api-actions';
 import { AppRoute, CITIES } from '../const';
 import { getToken } from '../services/token';
-import { getSelectedCity } from '../store/action';
+import { loginAction } from '../store/thunks/auth';
+import { offersActions } from '../store/slices/offers';
 
 export default function LoginPage() {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -30,7 +30,7 @@ export default function LoginPage() {
   const randomCity = getRandomCity();
 
   const handleLocationClick = () => {
-    dispatch(getSelectedCity(randomCity));
+    dispatch(offersActions.setLocation(randomCity));
   };
 
   return (

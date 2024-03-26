@@ -1,17 +1,19 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
-import { logoutAction } from '../../store/api-actions';
+import { logoutAction } from '../../store/thunks/auth';
+import useAuth from '../../hooks/use-auth';
+import { authSelectors } from '../../store/slices/auth';
 
 type THeaderProps = {
   classMain?: string;
 }
 
 export default function Header({ classMain }: THeaderProps) {
-  const isAuthorized = useAppSelector((state) =>state.authorizationStatus === AuthorizationStatus.Auth);
-  const {email} = useAppSelector((state) => state.userData);
-  const favoritesCount = useAppSelector((state) => state.favoritesCount);
+  const isAuthorized = useAuth();
+  const userData = useAppSelector(authSelectors.userData);
+  const favoritesCount = 3;
 
   const handleSignOutClick = () => {
     store.dispatch(logoutAction());
@@ -35,7 +37,7 @@ export default function Header({ classMain }: THeaderProps) {
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">{email}</span>
+                      <span className="header__user-name user__name">{userData?.email}</span>
                       <span className="header__favorite-count">{favoritesCount}</span>
                     </Link>
                   </li>

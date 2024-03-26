@@ -5,6 +5,7 @@ import { City } from '../../types/city';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/offer';
 import { useAppSelector } from '../../hooks';
+import { offersSelectors } from '../../store/slices/offers';
 
 type MapProps = {
   currentLocation: City;
@@ -32,7 +33,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map({currentLocation, currentOffers, className, offerDetailId}: MapProps): JSX.Element {
-  const activeOfferState = useAppSelector((state) => state.activeOffer);
+  const activeOfferState = useAppSelector(offersSelectors.activeOfferId);
   const activeOffer = offerDetailId ?? activeOfferState;
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentLocation);

@@ -7,11 +7,14 @@ import Card from '../components/card/card';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import Loader from '../components/loader/loader';
 import { Offer } from '../types/offer';
-import { AuthorizationStatus } from '../const';
 import { useEffect } from 'react';
-import { fetchCommentsByIdAction, fetchNearOffersByIdAction, fetchOfferByIdAction } from '../store/api-actions';
 import { useParams } from 'react-router-dom';
 import NotFoundPage from './not-found-page';
+import useAuth from '../hooks/use-auth';
+import { offerDetailSelectors } from '../store/slices/offer-detail';
+import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '../store/thunks/offers';
+import { fetchCommentsByIdAction } from '../store/thunks/comments';
+import { RequestStatus } from '../const';
 
 const MAX_NEAR_OFFERS = 3;
 
@@ -34,10 +37,10 @@ const getRandomThreeNearOffers = (nearOffers: Offer[]) => {
 
 export default function OfferPage() {
   const {offerId = ''} = useParams();
-  const isAuthorized = useAppSelector((state) =>state.authorizationStatus === AuthorizationStatus.Auth);
-  const isLoading = useAppSelector((state) => state.isDataLoading);
-  const offerDetail = useAppSelector((state) => state.offerDetail);
-  const nearOffers = useAppSelector((state) => state.nearOffers);
+  const isAuthorized = useAuth();
+  const requestStatus = useAppSelector(offerDetailSelectors.offerDetailStatus);
+  const offerDetail = useAppSelector(offerDetailSelectors.offerDetail);
+  const nearOffers = useAppSelector(offerDetailSelectors.nearOffers);
 
   const randomNearOffers = getRandomThreeNearOffers(nearOffers);
   const nearOffersPlusCurrent = [...randomNearOffers, offerDetail] as Offer[];
@@ -49,13 +52,13 @@ export default function OfferPage() {
     dispatch(fetchNearOffersByIdAction(offerId));
   },[dispatch, offerId]);
 
-  if (isLoading) {
+  if (requestStatus === RequestStatus.Loading) {
     return (
       <Loader />
     );
   }
 
-  if (!offerDetail) {
+  if (!offerDetail || requestStatus === RequestStatus.Failed) {
     return (
       <NotFoundPage />
     );
@@ -148,7 +151,7 @@ export default function OfferPage() {
             </div>
             <section className="offer__reviews reviews">
               <CommentList />
-              {isAuthorized && <CommentForm />}
+              {isAuthorized && <CommentForm offerId={offerId} />}
             </section>
           </div>
         </div>
