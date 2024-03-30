@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, RequestStatus } from '../../const';
 import { UserData } from '../../types/user-data';
 import { checkAuthAction, loginAction, logoutAction } from '../thunks/auth';
+import { dropToken } from '../../services/token';
 
 type AuthState = {
   authorizationStatus: AuthorizationStatus;
@@ -24,6 +25,7 @@ const processSuccess = (state: AuthState, action: PayloadAction<UserData>) => {
 const processFailed = (state: AuthState) => {
   state.authorizationStatus = AuthorizationStatus.NoAuth;
   state.status = RequestStatus.Failed;
+  dropToken();
 };
 
 const processLoading = (state: AuthState) => {

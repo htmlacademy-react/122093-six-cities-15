@@ -1,52 +1,61 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import RatingStar from '../rating-star/rating-star';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addNewCommentAction } from '../../store/thunks/comments';
+import { MAX_CHARACTERS, MIN_CHARACTERS, RequestStatus } from '../../const';
+import { commentsSelectors } from '../../store/slices/comments';
 
 type CommentFormProps = {
   offerId: string;
 }
 
-const MIN_CHARACTERS = 50;
-const MAX_CHARACTERS = 300;
-
 export default function CommentForm({offerId}: CommentFormProps) {
+  const status = useAppSelector(commentsSelectors.commentsStatus);
+  const loadingStatus = status === RequestStatus.Loading;
   const [form, setForm] = useState({
-    comment: '',
+    review: '',
     rating: 0,
   });
+
+  const buttonDisabled = form.review.length < MIN_CHARACTERS || form.review.length > MAX_CHARACTERS || !form.rating;
+  const handleChange = (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const {name, value} = evt.target;
+    const inputValue = name === 'rating' ? +value : value;
+    setForm({...form, [name]: inputValue});
+  };
 
   const dispatch = useAppDispatch();
 
   const handleSubmitClick = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    dispatch(addNewCommentAction({offerId, ...form}));
-    setForm({comment: '', rating: 0,});
+    dispatch(addNewCommentAction({offerId, ...{comment: form.review, rating: form.rating}}));
+
+    if (status === RequestStatus.Success) {
+      setForm({review: '', rating: 0,});
+    }
   };
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmitClick}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <RatingStar getRating={(rate) => setForm({...form, rating: rate})} formRatingValue={form.rating} />
+        <RatingStar handleChange={handleChange} formRatingValue={form.rating} status={loadingStatus}/>
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={form.comment}
-        onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => {
-          setForm({...form, comment: target.value}
-          );
-        }}
+        value={form.review}
+        onChange={handleChange}
+        disabled={loadingStatus}
       >
       </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
                       To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={form.comment.length <= MIN_CHARACTERS || form.comment.length >= MAX_CHARACTERS || !form.rating}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={loadingStatus || buttonDisabled}>Submit</button>
       </div>
     </form>
   );

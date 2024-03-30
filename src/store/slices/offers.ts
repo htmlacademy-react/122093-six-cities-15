@@ -39,6 +39,9 @@ const offersSlice = createSlice({
     },
     setActiveOfferId: (state, action: PayloadAction<Offer['id']>) => {
       state.activeOfferId = action.payload;
+    },
+    updateOffers: (state, action: PayloadAction<Offer['id']>) => {
+      state.offers = state.offers.map((offer) => offer.id === action.payload ? {...offer, isFavorite: !offer.isFavorite} : offer);
     }
   },
   selectors: {

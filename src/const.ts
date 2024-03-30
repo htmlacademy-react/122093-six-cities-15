@@ -83,6 +83,7 @@ const SORT_TYPES = {
 enum APIRoute {
   Offers = '/offers',
   Comments = '/comments',
+  Favorite = '/favorite',
   Login = '/login',
   Logout = '/logout'
 }
@@ -96,6 +97,20 @@ enum RequestStatus {
   Failed
 }
 
+enum FavoriteStatus {
+  Removed,
+  Added
+}
+
+const MAX_NEAR_OFFERS = 3;
+const MAX_IMAGES_COUNT = 6;
+const MIN_CHARACTERS = 50;
+const MAX_CHARACTERS = 300;
+const DEFAULT_COMMENT_COUNT = 10;
+
+const COMMENT_DATE_FORMAT = 'MMMM YYYY';
+const ISO_DATE_FORMAT = 'YYYY-MM-DD';
+
 export {
   AppRoute,
   AuthorizationStatus,
@@ -106,4 +121,12 @@ export {
   DEFAULT_SORT_TYPE,
   APIRoute,
   RequestStatus,
+  FavoriteStatus,
+  MAX_NEAR_OFFERS,
+  MAX_IMAGES_COUNT,
+  MIN_CHARACTERS,
+  MAX_CHARACTERS,
+  DEFAULT_COMMENT_COUNT,
+  COMMENT_DATE_FORMAT,
+  ISO_DATE_FORMAT,
 };

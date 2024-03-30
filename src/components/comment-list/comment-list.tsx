@@ -1,41 +1,13 @@
-import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getRatingWidth } from '../../utils';
+import { formatDateToISO, getRatingWidth, humanizeDate } from '../../utils';
 import { commentsSelectors } from '../../store/slices/comments';
-
-const DEFAULT_COMMENT_COUNT = 10;
+import { DEFAULT_COMMENT_COUNT } from '../../const';
 
 export default function CommentList() {
-  const [buttonShow, setButtonShow] = useState(false);
-  const [renderedCommentsCount, setRenderedCommentsCount] = useState(DEFAULT_COMMENT_COUNT);
   const initialComments = useAppSelector(commentsSelectors.comments);
   const sortedComments = initialComments.toSorted(({date: a}, {date: b}) => a < b ? 1 : -1);
-  let commentCounter = 0;
 
-  useEffect(() => {
-    if (initialComments.length !== 0 && DEFAULT_COMMENT_COUNT < initialComments.length) {
-      setButtonShow(true);
-      if (renderedCommentsCount === initialComments.length) {
-        setButtonShow(false);
-      }
-    }
-  },[initialComments.length, renderedCommentsCount]);
-
-  const renderComments = () => {
-    const maxCount = commentCounter + renderedCommentsCount;
-    const comments = sortedComments.slice(commentCounter, maxCount);
-    commentCounter += maxCount;
-    return comments;
-  };
-
-  const comments = renderComments();
-
-  const handleButtonClick = () => {
-    const nextComments = renderComments();
-    const renderedComments = comments.concat(nextComments);
-    setRenderedCommentsCount(renderedComments.length);
-  };
-
+  const comments = sortedComments.slice(0, DEFAULT_COMMENT_COUNT);
 
   return (
     <>
@@ -61,12 +33,12 @@ export default function CommentList() {
               <p className="reviews__text">
                 {comment.comment}
               </p>
-              <time className="reviews__time" dateTime={comment.date}>{comment.date}</time>
+              <time className="reviews__time" dateTime={formatDateToISO(comment.date)}>{humanizeDate(comment.date)}</time>
             </div>
           </li>
         ))}
       </ul>
-      {buttonShow && <button onClick={handleButtonClick} className="reviews__submit form__submit button" type="button" style={{marginLeft:'250px'}}>Load more</button>}
+
     </>
   );
 }

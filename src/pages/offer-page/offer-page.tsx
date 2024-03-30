@@ -1,39 +1,21 @@
-import Container from '../components/container/container';
-import { getRatingWidth } from '../utils';
-import CommentForm from '../components/comment-form/comment-form';
-import CommentList from '../components/comment-list/comment-list';
-import Map from '../components/map/map';
-import Card from '../components/card/card';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import Loader from '../components/loader/loader';
-import { Offer } from '../types/offer';
+import Container from '../../components/container/container';
+import { capitalizeFirstLetter, getRatingWidth } from '../../utils';
+import CommentForm from '../../components/comment-form/comment-form';
+import CommentList from '../../components/comment-list/comment-list';
+import Map from '../../components/map/map';
+import Card from '../../components/card/card';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import Loader from '../../components/loader/loader';
+import { Offer } from '../../types/offer';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import NotFoundPage from './not-found-page';
-import useAuth from '../hooks/use-auth';
-import { offerDetailSelectors } from '../store/slices/offer-detail';
-import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '../store/thunks/offers';
-import { fetchCommentsByIdAction } from '../store/thunks/comments';
-import { RequestStatus } from '../const';
-
-const MAX_NEAR_OFFERS = 3;
-
-const getRandomThreeNearOffers = (nearOffers: Offer[]) => {
-  const offer: Offer[] = [];
-  for (let i = 0; i < nearOffers.length; i++) {
-    const randomNearOffer = nearOffers[Math.floor(Math.random() * nearOffers.length)];
-
-    if (!offer.includes(randomNearOffer)) {
-      offer.push(randomNearOffer);
-    }
-
-    if (offer.length >= MAX_NEAR_OFFERS) {
-      break;
-    }
-  }
-
-  return offer;
-};
+import NotFoundPage from '../not-found-page/not-found-page';
+import useAuth from '../../hooks/use-auth';
+import { offerDetailSelectors } from '../../store/slices/offer-detail';
+import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '../../store/thunks/offers';
+import { fetchCommentsByIdAction } from '../../store/thunks/comments';
+import { MAX_IMAGES_COUNT, MAX_NEAR_OFFERS, RequestStatus } from '../../const';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
 
 export default function OfferPage() {
   const {offerId = ''} = useParams();
@@ -42,14 +24,16 @@ export default function OfferPage() {
   const offerDetail = useAppSelector(offerDetailSelectors.offerDetail);
   const nearOffers = useAppSelector(offerDetailSelectors.nearOffers);
 
-  const randomNearOffers = getRandomThreeNearOffers(nearOffers);
+  const randomNearOffers = nearOffers.slice(0, MAX_NEAR_OFFERS);
   const nearOffersPlusCurrent = [...randomNearOffers, offerDetail] as Offer[];
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchOfferByIdAction(offerId));
-    dispatch(fetchCommentsByIdAction(offerId));
-    dispatch(fetchNearOffersByIdAction(offerId));
+    Promise.all([
+      dispatch(fetchOfferByIdAction(offerId)),
+      dispatch(fetchCommentsByIdAction(offerId)),
+      dispatch(fetchNearOffersByIdAction(offerId))
+    ]);
   },[dispatch, offerId]);
 
   if (requestStatus === RequestStatus.Loading) {
@@ -69,7 +53,7 @@ export default function OfferPage() {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {offerDetail.images.map((image) => (
+            {offerDetail.images.slice(0, MAX_IMAGES_COUNT).map((image) => (
               <div className="offer__image-wrapper" key={image}>
                 <img className="offer__image" src={image} alt="Photo studio"/>
               </div>
@@ -88,12 +72,7 @@ export default function OfferPage() {
               <h1 className="offer__name">
                 {offerDetail.title}
               </h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <FavoriteButton isFavorite={offerDetail.isFavorite} offerId={offerId} extraClass="offer" width={31} height={33} />
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
@@ -104,13 +83,13 @@ export default function OfferPage() {
             </div>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                {offerDetail.type}
+                {capitalizeFirstLetter(offerDetail.type)}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                {offerDetail.bedrooms}
+                {offerDetail.bedrooms} {offerDetail.bedrooms > 1 ? 'Bedrooms' : 'Bedroom'}
               </li>
               <li className="offer__feature offer__feature--adults">
-                {offerDetail.maxAdults}
+              Max {offerDetail.maxAdults} {offerDetail.maxAdults > 1 ? 'adults' : 'adult'}
               </li>
             </ul>
             <div className="offer__price">
@@ -130,7 +109,7 @@ export default function OfferPage() {
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
-                <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                <div className={`offer__avatar-wrapper ${offerDetail.host.isPro && 'offer__avatar-wrapper--pro'} user__avatar-wrapper`}>
                   <img className="offer__avatar user__avatar" src={offerDetail.host.avatarUrl} width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="offer__user-name">
