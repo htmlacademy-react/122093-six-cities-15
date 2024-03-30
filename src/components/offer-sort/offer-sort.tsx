@@ -1,5 +1,8 @@
 import { SORT_TYPES } from '../../const';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import useEscapeKeydown from '../../hooks/use-escape-keydown';
+import useOutsideClick from '../../hooks/use-outside-click';
+import useBoolean from '../../hooks/use-boolean';
 
 type TOfferSortType = {
   onSortTypeClick: (sortType: string) => void;
@@ -7,51 +10,24 @@ type TOfferSortType = {
 };
 
 export default function OfferSort({activeSortType, onSortTypeClick}: TOfferSortType) {
-  const [isSortBarOpened, setSortBarOpened] = useState(false);
-  const isSortOpened = () => isSortBarOpened ? 'places__options--opened' : '';
+  const {isOn, off, toggle} = useBoolean(false);
+  const isSortOpened = () => isOn ? 'places__options--opened' : '';
   const isSortActive = (sortType: string) => activeSortType === sortType ? 'places__option--active' : '';
 
   const handleSortTypeClick = (sortType: string) => {
     onSortTypeClick(sortType);
-    setSortBarOpened(!isSortBarOpened);
+    toggle();
   };
 
-  useEffect(() => {
-    if (isSortBarOpened) {
-      const onEscKeyDown = (evt: KeyboardEvent) => {
-        if (evt.key === 'Escape') {
-          evt.preventDefault();
-          setSortBarOpened(!isSortBarOpened);
-        }
-      };
+  useEscapeKeydown(isOn, off);
 
-      document.addEventListener('keydown', onEscKeyDown);
-      return () => {
-        document.removeEventListener('keydown', onEscKeyDown);
-      };
-    }
-  });
-
-  const sortContainerRef = useRef<HTMLFormElement | null>(null);
-  useEffect(() => {
-    if (isSortBarOpened) {
-      const handleOutsideClick = (evt: MouseEvent) => {
-        if (sortContainerRef.current && !sortContainerRef.current.contains(evt.target as Node)) {
-          setSortBarOpened(!isSortBarOpened);
-        }
-      };
-
-      document.addEventListener('mousedown', handleOutsideClick);
-      return () => {
-        document.removeEventListener('mousedown', handleOutsideClick);
-      };
-    }
-  });
+  const sortContainerRef = useRef(null);
+  useOutsideClick(isOn, off, sortContainerRef);
 
   return (
     <form className="places__sorting" action="#" method="get" ref={sortContainerRef}>
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={() => setSortBarOpened(!isSortBarOpened)}>
+      <span className="places__sorting-type" tabIndex={0} onClick={() => toggle()}>
         {activeSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>

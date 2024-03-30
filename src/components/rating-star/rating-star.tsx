@@ -2,11 +2,12 @@ import { ChangeEvent, Fragment } from 'react';
 import { RatingsStar } from '../../const';
 
 type TRatingStarProps = {
-  getRating: (rate: number) => void;
+  handleChange: (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   formRatingValue: number;
+  status: boolean;
 }
 
-export default function RatingStar({getRating, formRatingValue}: TRatingStarProps) {
+export default function RatingStar({handleChange, formRatingValue, status}: TRatingStarProps) {
   return (
     RatingsStar.map(([title, value]) => (
       <Fragment key={value}>
@@ -15,8 +16,9 @@ export default function RatingStar({getRating, formRatingValue}: TRatingStarProp
           value={value}
           id={`${value}-stars`}
           type="radio"
-          onChange={(evt: ChangeEvent<HTMLInputElement>) => getRating(+evt.target.value)}
+          onChange={handleChange}
           checked={formRatingValue === +value}
+          disabled={status}
         />
         <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={title}>
           <svg className="form__star-image" width="37" height="33">

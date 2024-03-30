@@ -1,11 +1,12 @@
 import {useRef, useEffect} from 'react';
-import {Icon, LayerGroup, Marker, layerGroup} from 'leaflet';
+import {LayerGroup, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
 import { City } from '../../types/city';
 import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/offer';
 import { useAppSelector } from '../../hooks';
 import { offersSelectors } from '../../store/slices/offers';
+import { currentCustomIcon, defaultCustomIcon } from './const';
 
 type MapProps = {
   currentLocation: City;
@@ -13,24 +14,6 @@ type MapProps = {
   className?: string;
   offerDetailId?: string;
 };
-
-const URL_MARKER_DEFAULT =
-  '../../img/pin.svg';
-
-const URL_MARKER_CURRENT =
-  '../../img/pin-active.svg';
-
-const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
-
-const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40]
-});
 
 function Map({currentLocation, currentOffers, className, offerDetailId}: MapProps): JSX.Element {
   const activeOfferState = useAppSelector(offersSelectors.activeOfferId);

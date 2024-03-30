@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus } from '../../const';
 import { Offer } from '../../types/offer';
 import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '../thunks/offers';
@@ -34,9 +34,10 @@ const offerDetailSlice = createSlice({
   initialState,
   name: 'offerDetail',
   reducers: {
-    clear(state) {
-      state.offerDetail = null;
-      state.nearOffers = [];
+    updateOfferDetail: (state, action: PayloadAction<Offer['id']>) => {
+      if (state.offerDetail?.id === action.payload) {
+        state.offerDetail.isFavorite = !state.offerDetail.isFavorite;
+      }
     }
   },
   selectors: {
