@@ -1,40 +1,42 @@
+import { RequestStatus } from '@const';
 import { createSlice } from '@reduxjs/toolkit';
-import { RequestStatus } from '../../const';
-import { Comment } from '../../types/comment';
-import { addNewCommentAction, fetchCommentsByIdAction } from '../thunks/comments';
+import { addNewCommentAction, fetchCommentsByIdAction } from '@store/thunks/comments';
+import { Comment } from '@type/comment';
 
 type CommentsState = {
   comments: Comment[];
-  status: RequestStatus;
+  fetchCommentStatus: RequestStatus;
+  addCommentStatus: RequestStatus;
 }
 
 const initialState: CommentsState = {
   comments: [],
-  status: RequestStatus.Idle,
+  fetchCommentStatus: RequestStatus.Idle,
+  addCommentStatus: RequestStatus.Idle,
 };
 
 const commentsSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(fetchCommentsByIdAction.pending, (state) => {
-        state.status = RequestStatus.Loading;
+        state.fetchCommentStatus = RequestStatus.Loading;
       })
       .addCase(fetchCommentsByIdAction.fulfilled, (state, action) => {
-        state.status = RequestStatus.Success;
+        state.fetchCommentStatus = RequestStatus.Success;
         state.comments = action.payload;
       })
       .addCase(fetchCommentsByIdAction.rejected, (state) => {
-        state.status = RequestStatus.Failed;
+        state.fetchCommentStatus = RequestStatus.Failed;
       })
       .addCase(addNewCommentAction.pending, (state) => {
-        state.status = RequestStatus.Loading;
+        state.addCommentStatus = RequestStatus.Loading;
       })
       .addCase(addNewCommentAction.fulfilled, (state, action) => {
-        state.status = RequestStatus.Success;
+        state.addCommentStatus = RequestStatus.Success;
         state.comments = [action.payload, ...state.comments];
       })
       .addCase(addNewCommentAction.rejected, (state) => {
-        state.status = RequestStatus.Failed;
+        state.addCommentStatus = RequestStatus.Failed;
       }),
   initialState,
   name: 'comments',
@@ -44,8 +46,8 @@ const commentsSlice = createSlice({
     }},
   selectors: {
     comments: (state) => state.comments,
-    commentsStatus: (state) => state.status,
-
+    fetchCommentStatus: (state) => state.fetchCommentStatus,
+    addCommentStatus: (state) => state.addCommentStatus
   }
 });
 

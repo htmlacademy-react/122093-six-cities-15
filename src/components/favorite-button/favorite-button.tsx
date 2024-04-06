@@ -1,11 +1,11 @@
+import { AppRoute, RequestStatus } from '@const';
+import { useAppDispatch, useAppSelector } from '@hooks/index';
+import { getToken } from '@services/token';
+import { favoritesSelectors } from '@store/slices/favorite';
+import { offerDetailActions } from '@store/slices/offer-detail';
+import { offersActions } from '@store/slices/offers';
+import { changeFavoriteStatusAction } from '@store/thunks/favorite';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getToken } from '../../services/token';
-import { changeFavoriteStatusAction } from '../../store/thunks/favorite';
-import { AppRoute, RequestStatus } from '../../const';
-import { favoritesSelectors } from '../../store/slices/favorite';
-import { offersActions } from '../../store/slices/offers';
-import { offerDetailActions } from '../../store/slices/offer-detail';
 
 type FavoriteButtonProps = {
   extraClass?: 'offer' | 'place-card';
@@ -15,7 +15,7 @@ type FavoriteButtonProps = {
   height?: number;
 }
 
-export default function FavoriteButton ({extraClass = 'place-card', isFavorite = false, offerId, width = 18, height = 19}: FavoriteButtonProps) {
+function FavoriteButton ({extraClass = 'place-card', isFavorite = false, offerId, width = 18, height = 19}: FavoriteButtonProps) {
   const favoriteLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
   const favoriteClass = `${extraClass}__bookmark-button ${isFavorite && `${extraClass}__bookmark-button--active`} button`;
   const token = getToken();
@@ -45,3 +45,5 @@ export default function FavoriteButton ({extraClass = 'place-card', isFavorite =
     </button>
   );
 }
+
+export default FavoriteButton;

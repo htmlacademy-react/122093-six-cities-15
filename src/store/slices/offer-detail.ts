@@ -1,7 +1,7 @@
+import { RequestStatus } from '@const';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { RequestStatus } from '../../const';
-import { Offer } from '../../types/offer';
-import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '../thunks/offers';
+import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '@store/thunks/offers';
+import { Offer } from '@type/offer';
 
 type OfferDetailState = {
   offerDetail: Offer | null;

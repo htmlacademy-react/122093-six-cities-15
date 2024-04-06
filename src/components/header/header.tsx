@@ -1,14 +1,15 @@
+import { AppRoute } from '@const';
+import useAuth from '@hooks/use-auth';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import useAuth from '../../hooks/use-auth';
 import HeaderAuth from './header-auth';
 import HeaderUnauth from './header-unauth';
+import { memo } from 'react';
 
 type THeaderProps = {
   classMain?: string;
 }
 
-export default function Header({ classMain }: THeaderProps) {
+function Header({ classMain }: THeaderProps) {
   const isAuthorized = useAuth();
   const activeLogo = classMain === 'page__main--index' ? 'header__logo-link--active' : '';
 
@@ -33,3 +34,6 @@ export default function Header({ classMain }: THeaderProps) {
     </header>
   );
 }
+
+const MemoizedHeader = memo(Header);
+export default MemoizedHeader;

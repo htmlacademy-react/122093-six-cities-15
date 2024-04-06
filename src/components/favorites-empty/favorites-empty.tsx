@@ -1,7 +1,7 @@
-import Container from '../container/container';
-import Footer from '../footer/footer';
+import Container from '@components/container';
+import Footer from '@components/footer';
 
-export default function FavoritesEmpty() {
+function FavoritesEmpty() {
   return (
     <Container classMain = "page__main--favorites page__main--favorites-empty" extraClass="page--favorites-empty" footer = {<Footer />}>
       <div className="page__favorites-container container">
@@ -16,3 +16,5 @@ export default function FavoritesEmpty() {
     </Container>
   );
 }
+
+export default FavoritesEmpty;

@@ -1,7 +1,7 @@
-import { APIRoute } from '../../const';
-import { Offer } from '../../types/offer';
-import { Comment } from '../../types/comment';
-import { createAppAsyncThunk } from '../../hooks';
+import { APIRoute } from '@const';
+import { createAppAsyncThunk } from '@hooks/index';
+import { Comment } from '@type/comment';
+import { Offer } from '@type/offer';
 
 export const fetchCommentsByIdAction = createAppAsyncThunk<Comment[], Offer['id']>(
   'data/fetchCommentsById',

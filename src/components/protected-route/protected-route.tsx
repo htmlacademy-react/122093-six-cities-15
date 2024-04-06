@@ -1,10 +1,11 @@
+import Loader from '@components/loader';
+import { AppRoute, RequestStatus } from '@const';
+import { useAppSelector } from '@hooks/index';
+import useAuth from '@hooks/use-auth';
+import { getToken } from '@services/token';
+import { authSelectors } from '@store/slices/auth';
 import { ReactNode } from 'react';
 import { Location, Navigate, useLocation } from 'react-router-dom';
-import { AppRoute, RequestStatus } from '../../const';
-import useAuth from '../../hooks/use-auth';
-import { useAppSelector } from '../../hooks';
-import { authSelectors } from '../../store/slices/auth';
-import Loader from '../loader/loader';
 
 type TProtectedRouteProps = {
   children: ReactNode;
@@ -17,12 +18,13 @@ type LocationState = {
   };
 }
 
-export default function ProtectedRoute({ unAuthorized, children }: TProtectedRouteProps) {
+function ProtectedRoute({ unAuthorized, children }: TProtectedRouteProps) {
   const isAuthorized = useAuth();
-  const status = useAppSelector(authSelectors.authStatus);
+  const authStatus = useAppSelector(authSelectors.authStatus);
   const location = useLocation() as Location<LocationState>;
+  const token = getToken();
 
-  if (status === RequestStatus.Loading) {
+  if (token && authStatus === RequestStatus.Loading) {
     return <Loader />;
   }
 
@@ -37,3 +39,5 @@ export default function ProtectedRoute({ unAuthorized, children }: TProtectedRou
 
   return children;
 }
+
+export default ProtectedRoute;

@@ -1,12 +1,12 @@
-import Container from '../../components/container/container';
-import { Helmet } from 'react-helmet-async';
-import { useAppDispatch } from '../../hooks';
+import Container from '@components/container';
+import { AppRoute, CITIES } from '@const';
+import { useAppDispatch } from '@hooks/index';
+import { offersActions } from '@store/slices/offers';
 import { Link } from 'react-router-dom';
-import { AppRoute, CITIES } from '../../const';
-import { offersActions } from '../../store/slices/offers';
 import LoginForm from './login-form';
+import HelmetComponent from '@components/helmet-component';
 
-export default function LoginPage() {
+function LoginPage() {
   const dispatch = useAppDispatch();
 
   const getRandomCity = () => CITIES[Math.floor(Math.random() * CITIES.length)];
@@ -18,9 +18,11 @@ export default function LoginPage() {
 
   return (
     <>
-      <Helmet>
-        <title>6 cities. Login page</title>
-      </Helmet>
+      <HelmetComponent
+        title='six cities - login page'
+        description='Authorization page allows users to verify their identities and log in to their accounts on a website'
+        type='login'
+      />
       <Container extraClass = "page--gray page--login" classMain = "page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -39,3 +41,5 @@ export default function LoginPage() {
     </>
   );
 }
+
+export default LoginPage;

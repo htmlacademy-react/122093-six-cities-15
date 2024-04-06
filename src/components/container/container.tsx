@@ -1,5 +1,5 @@
+import Header from '@components/header';
 import { ReactNode } from 'react';
-import Header from '../header/header';
 
 type TContainerProps = {
   children: ReactNode;
@@ -8,7 +8,7 @@ type TContainerProps = {
   footer?: ReactNode;
 };
 
-export default function Container({ children, extraClass, classMain, footer }: TContainerProps) {
+function Container({ children, extraClass, classMain, footer }: TContainerProps) {
   return (
     <div className={`page ${extraClass ? extraClass : ''}`}>
       <Header classMain={classMain} />
@@ -20,3 +20,5 @@ export default function Container({ children, extraClass, classMain, footer }: T
     </div>
   );
 }
+
+export default Container;

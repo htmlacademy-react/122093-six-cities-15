@@ -22,4 +22,13 @@ function formatDateToISO(date: string): string {
   return date ? dayjs(date).format(ISO_DATE_FORMAT) : '';
 }
 
-export {getRatingWidth, getImageSize, capitalizeFirstLetter, humanizeDate, formatDateToISO};
+const pluralize = (count: number, noun: string, suffix = 's', pluralNoun?: string) => {
+  if (count <= 1) {
+    return `${count} ${noun}`;
+  }
+
+  const pluralForm = pluralNoun ? `${pluralNoun}` : `${noun}${suffix}`;
+  return `${count} ${pluralForm}`;
+};
+
+export {getRatingWidth, getImageSize, capitalizeFirstLetter, humanizeDate, formatDateToISO, pluralize};

@@ -5,7 +5,7 @@ import { getToken } from '../../services/token';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-export default function LoginForm () {
+function LoginForm () {
   const [form, setForm] = useState({
     email: '',
     password: ''
@@ -41,3 +41,5 @@ export default function LoginForm () {
     </form>
   );
 }
+
+export default LoginForm;

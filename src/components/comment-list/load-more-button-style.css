@@ -1,0 +1,18 @@
+.load-more {
+  margin-left: 270px;
+  width: 120px;
+  padding: 12px;
+  background-color: rgb(0, 77, 160);
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+}
+
+.load-more:hover {
+  background-color: rgb(0, 103, 212);
+}

@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
-import { CITIES } from '../../const';
-import { SyntheticEvent } from 'react';
-import { City } from '../../types/city';
-import { offersActions } from '../../store/slices/offers';
-import { useAppDispatch } from '../../hooks';
+import { SyntheticEvent, memo } from 'react';
+import { City } from '@type/city';
+import { useAppDispatch } from '@hooks/index';
+import { offersActions } from '@store/slices/offers';
+import { CITIES } from '@const';
 
 type TLocationsListProps = {
   currentLocation: City;
 }
 
-export default function LocationsList({currentLocation}: TLocationsListProps) {
+function LocationsList({currentLocation}: TLocationsListProps) {
   const isActive = (city: string) => city === currentLocation.name ? 'tabs__item--active' : '';
   const dispatch = useAppDispatch();
 
@@ -32,3 +32,6 @@ export default function LocationsList({currentLocation}: TLocationsListProps) {
     </section>
   );
 }
+
+const MemoizedLocationsList = memo(LocationsList);
+export default MemoizedLocationsList;
