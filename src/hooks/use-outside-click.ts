@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect } from 'react';
 
-export default function useOutsideClick (isOpened: boolean, close: () => void, containerRef: MutableRefObject<HTMLElement | null>) {
+function useOutsideClick (isOpened: boolean, close: () => void, containerRef: MutableRefObject<HTMLElement | null>) {
   useEffect(() => {
     if (isOpened) {
       const handleOutsideClick = (evt: MouseEvent) => {
@@ -16,3 +16,5 @@ export default function useOutsideClick (isOpened: boolean, close: () => void, c
     }
   });
 }
+
+export default useOutsideClick;

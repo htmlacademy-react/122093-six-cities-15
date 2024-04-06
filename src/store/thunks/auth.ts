@@ -1,8 +1,8 @@
-import { UserData } from '../../types/user-data';
-import { APIRoute } from '../../const';
-import { dropToken, saveToken } from '../../services/token';
-import { AuthData } from '../../types/auth-data';
-import { createAppAsyncThunk } from '../../hooks';
+import { APIRoute } from '@const';
+import { createAppAsyncThunk } from '@hooks/index';
+import { dropToken, saveToken } from '@services/token';
+import { AuthData } from '@type/auth-data';
+import { UserData } from '@type/user-data';
 
 export const checkAuthAction = createAppAsyncThunk<UserData, undefined>(
   'user/checkAuth',

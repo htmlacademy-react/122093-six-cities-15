@@ -1,10 +1,10 @@
-import { City } from '../../types/city';
+import { City } from '@type/city';
 
 type TNoOffersProps = {
   currentLocation: City;
 }
 
-export default function NoOffers({currentLocation}: TNoOffersProps) {
+function NoOffers({currentLocation}: TNoOffersProps) {
   return (
     <div className="cities__places-container cities__places-container--empty container">
       <section className="cities__no-places">
@@ -17,3 +17,5 @@ export default function NoOffers({currentLocation}: TNoOffersProps) {
     </div>
   );
 }
+
+export default NoOffers;

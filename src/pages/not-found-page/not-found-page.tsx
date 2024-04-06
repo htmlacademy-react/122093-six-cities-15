@@ -1,14 +1,16 @@
-import { Helmet } from 'react-helmet-async';
-import Container from '../../components/container/container';
+import Container from '@components/container';
+import HelmetComponent from '@components/helmet-component';
+import { AppRoute } from '@const';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 
-export default function NotFoundPage() {
+function NotFoundPage() {
   return (
     <>
-      <Helmet>
-        <title>6 cities. 404 Not Found</title>
-      </Helmet>
+      <HelmetComponent
+        title='six cities - 404 Not Found'
+        description='404 Not Found.'
+        type='404 Not Found'
+      />
       <Container>
         <h2>404 Not Found</h2>
         <Link to={AppRoute.Root}>Go to main page</Link>
@@ -16,3 +18,5 @@ export default function NotFoundPage() {
     </>
   );
 }
+
+export default NotFoundPage;

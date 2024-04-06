@@ -1,10 +1,10 @@
 import { Reducer, combineReducers, configureStore } from '@reduxjs/toolkit';
-import { createAPI } from '../services/api';
 import { offerDetailSlice } from './slices/offer-detail';
 import { offersSlice } from './slices/offers';
 import { commentsSlice } from './slices/comments';
 import { authSlice } from './slices/auth';
 import { favoritesSlice } from './slices/favorite';
+import { createAPI } from '@services/api';
 
 const reducer: Reducer = combineReducers({
   [offerDetailSlice.name]: offerDetailSlice.reducer,

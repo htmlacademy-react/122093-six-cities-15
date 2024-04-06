@@ -1,6 +1,6 @@
-import { APIRoute } from '../../const';
-import { Offer } from '../../types/offer';
-import { createAppAsyncThunk } from '../../hooks';
+import { APIRoute } from '@const';
+import { createAppAsyncThunk } from '@hooks/index';
+import { Offer } from '@type/offer';
 
 export const fetchOffersAction = createAppAsyncThunk<Offer[], undefined>(
   'data/fetchOffers',

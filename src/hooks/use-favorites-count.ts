@@ -4,7 +4,7 @@ import { favoritesSelectors } from '../store/slices/favorite';
 import { RequestStatus } from '../const';
 import { fetchFavoritesAction } from '../store/thunks/favorite';
 
-export default function useFavoritesCount () {
+function useFavoritesCount () {
   const status = useAppSelector(favoritesSelectors.favoritesStatus);
   const count = useAppSelector(favoritesSelectors.favorites).length;
   const dispatch = useAppDispatch();
@@ -17,3 +17,5 @@ export default function useFavoritesCount () {
 
   return count;
 }
+
+export default useFavoritesCount;

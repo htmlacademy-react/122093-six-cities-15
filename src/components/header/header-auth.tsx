@@ -5,7 +5,7 @@ import useFavoritesCount from '../../hooks/use-favorites-count';
 import { authSelectors } from '../../store/slices/auth';
 import { logoutAction } from '../../store/thunks/auth';
 
-export default function HeaderAuth () {
+function HeaderAuth () {
   const userData = useAppSelector(authSelectors.userData);
   const favoritesCount = useFavoritesCount();
   const dispatch = useAppDispatch();
@@ -32,3 +32,5 @@ export default function HeaderAuth () {
     </>
   );
 }
+
+export default HeaderAuth;

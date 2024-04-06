@@ -1,8 +1,8 @@
+import { DEFAULT_CITY, RequestStatus } from '@const';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { Offer } from '../../types/offer';
-import { DEFAULT_CITY, RequestStatus } from '../../const';
-import { City } from '../../types/city';
-import { fetchOffersAction } from '../thunks/offers';
+import { fetchOffersAction } from '@store/thunks/offers';
+import { City } from '@type/city';
+import { Offer } from '@type/offer';
 
 type OffersState = {
   city: City;

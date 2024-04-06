@@ -1,8 +1,8 @@
+import { AuthorizationStatus, RequestStatus } from '@const';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { AuthorizationStatus, RequestStatus } from '../../const';
-import { UserData } from '../../types/user-data';
-import { checkAuthAction, loginAction, logoutAction } from '../thunks/auth';
-import { dropToken } from '../../services/token';
+import { dropToken } from '@services/token';
+import { checkAuthAction, loginAction, logoutAction } from '@store/thunks/auth';
+import { UserData } from '@type/user-data';
 
 type AuthState = {
   authorizationStatus: AuthorizationStatus;

@@ -1,15 +1,15 @@
-import { SORT_TYPES } from '../../const';
+import { SORT_TYPES } from '@const';
+import useBoolean from '@hooks/use-boolean';
+import useEscapeKeydown from '@hooks/use-escape-keydown';
+import useOutsideClick from '@hooks/use-outside-click';
 import { useRef } from 'react';
-import useEscapeKeydown from '../../hooks/use-escape-keydown';
-import useOutsideClick from '../../hooks/use-outside-click';
-import useBoolean from '../../hooks/use-boolean';
 
 type TOfferSortType = {
   onSortTypeClick: (sortType: string) => void;
   activeSortType: string;
 };
 
-export default function OfferSort({activeSortType, onSortTypeClick}: TOfferSortType) {
+function OfferSort({activeSortType, onSortTypeClick}: TOfferSortType) {
   const {isOn, off, toggle} = useBoolean(false);
   const isSortOpened = () => isOn ? 'places__options--opened' : '';
   const isSortActive = (sortType: string) => activeSortType === sortType ? 'places__option--active' : '';
@@ -41,3 +41,5 @@ export default function OfferSort({activeSortType, onSortTypeClick}: TOfferSortT
     </form>
   );
 }
+
+export default OfferSort;

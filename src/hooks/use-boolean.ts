@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function useBoolean(initialValue: boolean = false) {
+function useBoolean(initialValue: boolean = false) {
   const [isOn, setIsOn] = useState<boolean>(initialValue);
 
   const on = () => setIsOn(true);
@@ -14,3 +14,5 @@ export default function useBoolean(initialValue: boolean = false) {
     toggle,
   };
 }
+
+export default useBoolean;

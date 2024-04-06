@@ -1,17 +1,17 @@
+import RatingStar from '@components/rating-star';
+import { MAX_CHARACTERS, MIN_CHARACTERS, RequestStatus } from '@const';
+import { useAppDispatch, useAppSelector } from '@hooks/index';
+import { commentsSelectors } from '@store/slices/comments';
+import { addNewCommentAction } from '@store/thunks/comments';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
-import RatingStar from '../rating-star/rating-star';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addNewCommentAction } from '../../store/thunks/comments';
-import { MAX_CHARACTERS, MIN_CHARACTERS, RequestStatus } from '../../const';
-import { commentsSelectors } from '../../store/slices/comments';
 
 type CommentFormProps = {
   offerId: string;
 }
 
-export default function CommentForm({offerId}: CommentFormProps) {
-  const status = useAppSelector(commentsSelectors.commentsStatus);
-  const loadingStatus = status === RequestStatus.Loading;
+function CommentForm({offerId}: CommentFormProps) {
+  const addCommentStatus = useAppSelector(commentsSelectors.addCommentStatus);
+  const loadingStatus = addCommentStatus === RequestStatus.Loading;
   const [form, setForm] = useState({
     review: '',
     rating: 0,
@@ -20,7 +20,7 @@ export default function CommentForm({offerId}: CommentFormProps) {
   const buttonDisabled = form.review.length < MIN_CHARACTERS || form.review.length > MAX_CHARACTERS || !form.rating;
   const handleChange = (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const {name, value} = evt.target;
-    const inputValue = name === 'rating' ? +value : value;
+    const inputValue = name === 'rating' ? Number(value) : value;
     setForm({...form, [name]: inputValue});
   };
 
@@ -28,11 +28,10 @@ export default function CommentForm({offerId}: CommentFormProps) {
 
   const handleSubmitClick = (evt: SyntheticEvent) => {
     evt.preventDefault();
-    dispatch(addNewCommentAction({offerId, ...{comment: form.review, rating: form.rating}}));
-
-    if (status === RequestStatus.Success) {
-      setForm({review: '', rating: 0,});
-    }
+    dispatch(addNewCommentAction({offerId, ...{comment: form.review, rating: form.rating}}))
+      .unwrap()
+      .then(() => setForm({review: '', rating: 0,}))
+      .catch(() => setForm(form));
   };
 
   return (
@@ -60,3 +59,5 @@ export default function CommentForm({offerId}: CommentFormProps) {
     </form>
   );
 }
+
+export default CommentForm;

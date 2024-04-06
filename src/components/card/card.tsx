@@ -1,10 +1,11 @@
+import FavoriteButton from '@components/favorite-button';
+import { AppRoute } from '@const';
+import { useAppDispatch } from '@hooks/index';
+import { offersActions } from '@store/slices/offers';
+import { Offer } from '@type/offer';
+import { capitalizeFirstLetter, getImageSize, getRatingWidth } from '@utils';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types/offer';
-import { AppRoute } from '../../const';
-import { getImageSize, getRatingWidth } from '../../utils';
-import { useAppDispatch } from '../../hooks';
-import { offersActions } from '../../store/slices/offers';
-import FavoriteButton from '../favorite-button/favorite-button';
 
 type TCardProps = {
   offer: Offer;
@@ -13,11 +14,19 @@ type TCardProps = {
   block: string;
 };
 
-export default function Card({ offer, favoriteClass, block, size = 'large' }: TCardProps) {
+function Card({ offer, favoriteClass, block, size = 'large' }: TCardProps) {
   const dispatch = useAppDispatch();
 
+  const handleMouseOver = () => {
+    dispatch(offersActions.setActiveOfferId(offer.id));
+  };
+
+  const handleMouseLeave = () => {
+    dispatch(offersActions.setActiveOfferId(''));
+  };
+
   return (
-    <article className={`${block}__card place-card`} onMouseOver={() => dispatch(offersActions.setActiveOfferId(offer.id))}>
+    <article className={`${block}__card place-card`} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
       {offer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
@@ -44,8 +53,11 @@ export default function Card({ offer, favoriteClass, block, size = 'large' }: TC
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}/${offer.id}`}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
   );
 }
+
+const MemoizedCard = memo(Card);
+export default MemoizedCard;

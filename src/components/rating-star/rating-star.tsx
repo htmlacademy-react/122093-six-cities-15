@@ -1,5 +1,5 @@
+import { RatingsStar } from '@const';
 import { ChangeEvent, Fragment } from 'react';
-import { RatingsStar } from '../../const';
 
 type TRatingStarProps = {
   handleChange: (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -7,7 +7,7 @@ type TRatingStarProps = {
   status: boolean;
 }
 
-export default function RatingStar({handleChange, formRatingValue, status}: TRatingStarProps) {
+function RatingStar({handleChange, formRatingValue, status}: TRatingStarProps) {
   return (
     RatingsStar.map(([title, value]) => (
       <Fragment key={value}>
@@ -17,7 +17,7 @@ export default function RatingStar({handleChange, formRatingValue, status}: TRat
           id={`${value}-stars`}
           type="radio"
           onChange={handleChange}
-          checked={formRatingValue === +value}
+          checked={formRatingValue === Number(value)}
           disabled={status}
         />
         <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={title}>
@@ -29,3 +29,5 @@ export default function RatingStar({handleChange, formRatingValue, status}: TRat
     ))
   );
 }
+
+export default RatingStar;

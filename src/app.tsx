@@ -1,16 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
-import MainPage from './pages/main-page/main-page';
-import LoginPage from './pages/login-page/login-page';
-import FavoritesPage from './pages/favorites-page/favorites-page';
-import OfferPage from './pages/offer-page/offer-page';
-import NotFoundPage from './pages/not-found-page/not-found-page';
-import ProtectedRoute from './components/protected-route/protected-route';
-import { AppRoute } from './const';
-import { useAppDispatch } from './hooks';
-import { checkAuthAction } from './store/thunks/auth';
-import { fetchOffersAction } from './store/thunks/offers';
-import { getToken } from './services/token';
 import { useEffect } from 'react';
+import { useAppDispatch } from './hooks';
+import { getToken } from '@services/token';
+import { checkAuthAction } from '@store/thunks/auth';
+import { fetchOffersAction } from '@store/thunks/offers';
+import { AppRoute } from '@const';
+import MainPage from '@pages/main-page';
+import ProtectedRoute from '@components/protected-route';
+import LoginPage from '@pages/login-page';
+import FavoritesPage from '@pages/favorites-page';
+import OfferPage from '@pages/offer-page';
+import NotFoundPage from '@pages/not-found-page';
 
 export default function App() {
   const dispatch = useAppDispatch();

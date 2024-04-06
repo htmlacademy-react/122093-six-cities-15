@@ -1,22 +1,24 @@
-import { Helmet } from 'react-helmet-async';
-import Card from '../../components/card/card';
-import Container from '../../components/container/container';
-import FavoritesLocation from '../../components/favorites-location/favorites-location';
-import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
-import Footer from '../../components/footer/footer';
-import { useAppSelector } from '../../hooks';
-import { favoritesSelectors } from '../../store/slices/favorite';
+import { useAppSelector } from '@hooks/index';
+import { favoritesSelectors } from '@store/slices/favorite';
 import { getFavoritesByLocation } from './helper';
+import Container from '@components/container';
+import Footer from '@components/footer';
+import FavoritesLocation from '@components/favorites-location';
+import Card from '@components/card';
+import FavoritesEmpty from '@components/favorites-empty';
+import HelmetComponent from '@components/helmet-component';
 
-export default function FavoritesPage() {
+function FavoritesPage() {
   const favoriteOffers = useAppSelector(favoritesSelectors.favorites);
   const favoritesCount = favoriteOffers.length;
   const favorites = getFavoritesByLocation(favoriteOffers);
   return (
     <>
-      <Helmet>
-        <title>6 cities. Favorites page</title>
-      </Helmet>
+      <HelmetComponent
+        title='six cities - favorites'
+        description='The Favorites page displays all the offers that the user has added to his favorites.'
+        type='favorites'
+      />
       {favoritesCount &&
         (
           <Container classMain="page__main--favorites" footer = {<Footer />}>
@@ -43,3 +45,5 @@ export default function FavoritesPage() {
     </>
   );
 }
+
+export default FavoritesPage;

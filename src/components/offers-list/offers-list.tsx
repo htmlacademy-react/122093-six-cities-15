@@ -1,10 +1,11 @@
-import { ReactNode, useState } from 'react';
-import { City } from '../../types/city';
-import { Offer } from '../../types/offer';
-import Card from '../card/card';
-import OfferSort from '../offer-sort/offer-sort';
-import { DEFAULT_SORT_TYPE } from '../../const';
+import { DEFAULT_SORT_TYPE } from '@const';
+import { ReactNode, memo, useState } from 'react';
 import { getSortedOffers } from './helper';
+import { Offer } from '@type/offer';
+import { City } from '@type/city';
+import OfferSort from '@components/offer-sort';
+import Card from '@components/card';
+import { pluralize } from '@utils';
 
 type TOffersListProps = {
   currentOffers: Offer[];
@@ -12,7 +13,7 @@ type TOffersListProps = {
   children: ReactNode;
 }
 
-export default function OffersList({currentOffers, currentLocation, children}: TOffersListProps) {
+function OffersList({currentOffers, currentLocation, children}: TOffersListProps) {
   const [activeSortType, setActiveSortType] = useState(DEFAULT_SORT_TYPE);
   const sortedOffers = getSortedOffers(activeSortType, currentOffers);
 
@@ -20,7 +21,7 @@ export default function OffersList({currentOffers, currentLocation, children}: T
     <div className="cities__places-container container">
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
-        <b className="places__found">{currentOffers.length} {currentOffers.length === 1 ? 'place' : 'places'} to stay in {currentLocation?.name}</b>
+        <b className="places__found">{pluralize(currentOffers.length, 'place')} to stay in {currentLocation?.name}</b>
         <OfferSort activeSortType={activeSortType} onSortTypeClick={setActiveSortType} />
         <div className="cities__places-list places__list tabs__content">
           {sortedOffers.map((offer) => (
@@ -37,3 +38,6 @@ export default function OffersList({currentOffers, currentLocation, children}: T
     </div>
   );
 }
+
+const MemoizedOffersList = memo(OffersList);
+export default MemoizedOffersList;

@@ -1,13 +1,21 @@
-import { useAppSelector } from '../../hooks';
-import { formatDateToISO, getRatingWidth, humanizeDate } from '../../utils';
-import { commentsSelectors } from '../../store/slices/comments';
-import { DEFAULT_COMMENT_COUNT } from '../../const';
+import { DEFAULT_COMMENT_COUNT } from '@const';
+import { useAppSelector } from '@hooks/index';
+import { commentsSelectors } from '@store/slices/comments';
+import { formatDateToISO, getRatingWidth, humanizeDate } from '@utils';
+import LoadMoreButton from './load-more-button';
+import { memo, useState } from 'react';
 
-export default function CommentList() {
+function CommentList() {
+  const [renderedComments, setRenderedComments] = useState(DEFAULT_COMMENT_COUNT);
+
   const initialComments = useAppSelector(commentsSelectors.comments);
   const sortedComments = initialComments.toSorted(({date: a}, {date: b}) => a < b ? 1 : -1);
 
-  const comments = sortedComments.slice(0, DEFAULT_COMMENT_COUNT);
+  const comments = sortedComments.slice(0, renderedComments);
+
+  const handleButtonClick = () => {
+    setRenderedComments(renderedComments + DEFAULT_COMMENT_COUNT);
+  };
 
   return (
     <>
@@ -38,7 +46,10 @@ export default function CommentList() {
           </li>
         ))}
       </ul>
-
+      {initialComments.length > renderedComments && <LoadMoreButton handleClick={handleButtonClick}/>}
     </>
   );
 }
+
+const MemoizedCommentList = memo(CommentList);
+export default MemoizedCommentList;

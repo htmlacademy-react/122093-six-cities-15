@@ -5,7 +5,7 @@ type TFavoritesLocationProps = {
   cityName: string;
 }
 
-export default function FavoritesLocation({ children, cityName }: TFavoritesLocationProps) {
+function FavoritesLocation({ children, cityName }: TFavoritesLocationProps) {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -21,3 +21,5 @@ export default function FavoritesLocation({ children, cityName }: TFavoritesLoca
     </li>
   );
 }
+
+export default FavoritesLocation;

@@ -1,11 +1,11 @@
 import {useRef, useEffect} from 'react';
 import {LayerGroup, Marker, layerGroup} from 'leaflet';
-import useMap from '../../hooks/use-map';
-import { City } from '../../types/city';
 import 'leaflet/dist/leaflet.css';
-import { Offer } from '../../types/offer';
-import { useAppSelector } from '../../hooks';
-import { offersSelectors } from '../../store/slices/offers';
+import { City } from '@type/city';
+import { Offer } from '@type/offer';
+import { useAppSelector } from '@hooks/index';
+import { offersSelectors } from '@store/slices/offers';
+import useMap from '@hooks/use-map';
 import { currentCustomIcon, defaultCustomIcon } from './const';
 
 type MapProps = {

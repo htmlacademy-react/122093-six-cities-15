@@ -1,7 +1,7 @@
+import { FavoriteStatus, RequestStatus } from '@const';
 import { createSlice } from '@reduxjs/toolkit';
-import { FavoriteStatus, RequestStatus } from '../../const';
-import { Offer } from '../../types/offer';
-import { changeFavoriteStatusAction, fetchFavoritesAction } from '../thunks/favorite';
+import { changeFavoriteStatusAction, fetchFavoritesAction } from '@store/thunks/favorite';
+import { Offer } from '@type/offer';
 
 type FavoriteState = {
   favorites: Offer[];

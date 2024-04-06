@@ -1,5 +1,7 @@
 import './loader-style.css';
 
-export default function Loader() {
+function Loader() {
   return <div className="loader" />;
 }
+
+export default Loader;
