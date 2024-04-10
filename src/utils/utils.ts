@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { COMMENT_DATE_FORMAT, ISO_DATE_FORMAT } from './const';
+import { COMMENT_DATE_FORMAT, ISO_DATE_FORMAT } from '../const';
 
 function getRatingWidth(rating: number) {
   const roundNumber = Math.round(rating);

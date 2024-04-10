@@ -19,7 +19,7 @@ function LocationsList({currentLocation}: TLocationsListProps) {
   };
 
   return (
-    <section className="locations container">
+    <section className="locations container" data-testid='locations-list'>
       <ul className="locations__list tabs__list">
         {CITIES.map((city) => (
           <li className="locations__item" key={city.name}>

@@ -5,7 +5,7 @@ import { Offer } from '@type/offer';
 import { City } from '@type/city';
 import OfferSort from '@components/offer-sort';
 import Card from '@components/card';
-import { pluralize } from '@utils';
+import { pluralize } from '@utils/utils';
 
 type TOffersListProps = {
   currentOffers: Offer[];
@@ -18,7 +18,7 @@ function OffersList({currentOffers, currentLocation, children}: TOffersListProps
   const sortedOffers = getSortedOffers(activeSortType, currentOffers);
 
   return (
-    <div className="cities__places-container container">
+    <div className="cities__places-container container" data-testid='offers-list'>
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">{pluralize(currentOffers.length, 'place')} to stay in {currentLocation?.name}</b>

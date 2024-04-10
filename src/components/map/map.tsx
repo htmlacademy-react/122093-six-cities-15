@@ -28,16 +28,16 @@ function Map({currentLocation, currentOffers, className, offerDetailId}: MapProp
       markerLayer.current.addTo(map);
       markerLayer.current.clearLayers();
     }
-  }, [currentLocation, map]);
+  }, [currentLocation, map, activeOffer]);
 
   useEffect(() => {
     if (map) {
+      markerLayer.current.clearLayers();
       currentOffers?.forEach((currentOffer) => {
         const marker = new Marker({
           lat: currentOffer.location.latitude,
           lng: currentOffer.location.longitude
         });
-
         marker
           .setIcon(
             activeOffer !== undefined && currentOffer.id === activeOffer
@@ -49,7 +49,7 @@ function Map({currentLocation, currentOffers, className, offerDetailId}: MapProp
     }
   }, [map, currentOffers, activeOffer]);
 
-  return <section className={`map ${className}`} ref={mapRef} />;
+  return <section className={`map ${className}`} ref={mapRef} data-testid='map' />;
 }
 
 export default Map;

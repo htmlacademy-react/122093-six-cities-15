@@ -5,7 +5,7 @@ type LoadMoreButtonProps = {
 }
 
 function LoadMoreButton ({handleClick}: LoadMoreButtonProps) {
-  return <button onClick={handleClick} type="button" className="load-more">Load more</button>;
+  return <button onClick={handleClick} type="button" className="load-more" data-testid="load-more-button">Load more</button>;
 }
 
 export default LoadMoreButton;
