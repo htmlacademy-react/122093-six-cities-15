@@ -19,6 +19,7 @@ function RatingStar({handleChange, formRatingValue, status}: TRatingStarProps) {
           onChange={handleChange}
           checked={formRatingValue === Number(value)}
           disabled={status}
+          data-testid={`rating-star-${value}`}
         />
         <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={title}>
           <svg className="form__star-image" width="37" height="33">

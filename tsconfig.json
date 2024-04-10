@@ -29,7 +29,7 @@
       "@store/*": ["./store/*"],
       "@type/*": ["./types/*"],
       "@const": ["./const"],
-      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"],
     }
   },
   "include": ["src", "vite.config.ts"],

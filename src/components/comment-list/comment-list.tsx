@@ -1,7 +1,7 @@
 import { DEFAULT_COMMENT_COUNT } from '@const';
 import { useAppSelector } from '@hooks/index';
 import { commentsSelectors } from '@store/slices/comments';
-import { formatDateToISO, getRatingWidth, humanizeDate } from '@utils';
+import { formatDateToISO, getRatingWidth, humanizeDate } from '@utils/utils';
 import LoadMoreButton from './load-more-button';
 import { memo, useState } from 'react';
 

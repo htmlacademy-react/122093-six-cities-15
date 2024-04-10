@@ -10,7 +10,7 @@ type TContainerProps = {
 
 function Container({ children, extraClass, classMain, footer }: TContainerProps) {
   return (
-    <div className={`page ${extraClass ? extraClass : ''}`}>
+    <div className={`page ${extraClass ? extraClass : ''}`} data-testid={classMain}>
       <Header classMain={classMain} />
 
       <main className={`page__main ${classMain ? classMain : ''}`}>

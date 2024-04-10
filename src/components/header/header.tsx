@@ -14,7 +14,7 @@ function Header({ classMain }: THeaderProps) {
   const activeLogo = classMain === 'page__main--index' ? 'header__logo-link--active' : '';
 
   return (
-    <header className="header">
+    <header className="header" data-testid='header'>
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">

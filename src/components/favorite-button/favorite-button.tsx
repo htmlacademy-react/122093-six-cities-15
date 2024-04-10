@@ -37,7 +37,7 @@ function FavoriteButton ({extraClass = 'place-card', isFavorite = false, offerId
   };
 
   return (
-    <button className={favoriteClass} type="button" onClick={handleClick} disabled={status === RequestStatus.Loading}>
+    <button className={favoriteClass} type="button" onClick={handleClick} disabled={status === RequestStatus.Loading} data-testid="favorite-button">
       <svg className={`${extraClass}__bookmark-icon`} width={width} height={height}>
         <use xlinkHref="#icon-bookmark"></use>
       </svg>

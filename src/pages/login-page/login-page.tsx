@@ -24,7 +24,7 @@ function LoginPage() {
         type='login'
       />
       <Container extraClass = "page--gray page--login" classMain = "page__main--login">
-        <div className="page__login-container container">
+        <div className="page__login-container container" data-testid="login-page">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
             <LoginForm />

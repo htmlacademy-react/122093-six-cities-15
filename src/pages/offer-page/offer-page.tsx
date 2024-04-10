@@ -14,7 +14,7 @@ import { offerDetailSelectors } from '@store/slices/offer-detail';
 import { fetchCommentsByIdAction } from '@store/thunks/comments';
 import { fetchNearOffersByIdAction, fetchOfferByIdAction } from '@store/thunks/offers';
 import { Offer } from '@type/offer';
-import { capitalizeFirstLetter, getRatingWidth, pluralize } from '@utils';
+import { capitalizeFirstLetter, getRatingWidth, pluralize } from '@utils/utils';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 

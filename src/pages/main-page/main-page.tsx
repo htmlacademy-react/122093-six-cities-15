@@ -28,8 +28,8 @@ function MainPage() {
         type='main page'
       />
       <Container extraClass="page--gray page--main" classMain={`page__main--index ${pageEmpty}`}>
-        <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
+        <h1 className="visually-hidden" data-testid='main-page'>Cities</h1>
+        <div className="tabs" >
           <LocationsList currentLocation={currentLocation} />
         </div>
         <div className="cities">

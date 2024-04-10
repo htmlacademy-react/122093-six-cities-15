@@ -7,11 +7,11 @@ type TFavoritesLocationProps = {
 
 function FavoritesLocation({ children, cityName }: TFavoritesLocationProps) {
   return (
-    <li className="favorites__locations-items">
+    <li className="favorites__locations-items" data-testid='favorites-location'>
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>{cityName}</span>
+            <span data-testid='city-name'>{cityName}</span>
           </a>
         </div>
       </div>

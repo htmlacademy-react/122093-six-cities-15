@@ -48,6 +48,7 @@ function CommentForm({offerId}: CommentFormProps) {
         value={form.review}
         onChange={handleChange}
         disabled={loadingStatus}
+        data-testid="review-textarea"
       >
       </textarea>
       <div className="reviews__button-wrapper">

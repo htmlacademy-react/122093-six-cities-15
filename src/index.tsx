@@ -4,13 +4,15 @@ import App from './app';
 import {BrowserRouter} from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { setupStore } from './store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const store = setupStore();
 
 root.render(
   <React.StrictMode>

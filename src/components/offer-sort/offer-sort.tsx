@@ -25,7 +25,7 @@ function OfferSort({activeSortType, onSortTypeClick}: TOfferSortType) {
   useOutsideClick(isOn, off, sortContainerRef);
 
   return (
-    <form className="places__sorting" action="#" method="get" ref={sortContainerRef}>
+    <form className="places__sorting" action="#" method="get" ref={sortContainerRef} data-testid='offer-sort'>
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0} onClick={() => toggle()}>
         {activeSortType}

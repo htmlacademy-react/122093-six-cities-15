@@ -4,7 +4,7 @@ import Footer from '@components/footer';
 function FavoritesEmpty() {
   return (
     <Container classMain = "page__main--favorites page__main--favorites-empty" extraClass="page--favorites-empty" footer = {<Footer />}>
-      <div className="page__favorites-container container">
+      <div className="page__favorites-container container" data-testid='favorites-empty'>
         <section className="favorites favorites--empty">
           <h1 className="visually-hidden">Favorites (empty)</h1>
           <div className="favorites__status-wrapper">

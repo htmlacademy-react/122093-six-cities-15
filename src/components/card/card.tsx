@@ -3,18 +3,17 @@ import { AppRoute } from '@const';
 import { useAppDispatch } from '@hooks/index';
 import { offersActions } from '@store/slices/offers';
 import { Offer } from '@type/offer';
-import { capitalizeFirstLetter, getImageSize, getRatingWidth } from '@utils';
+import { capitalizeFirstLetter, getImageSize, getRatingWidth } from '@utils/utils';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 type TCardProps = {
   offer: Offer;
-  favoriteClass?: string;
   size?: string;
   block: string;
 };
 
-function Card({ offer, favoriteClass, block, size = 'large' }: TCardProps) {
+function Card({ offer, block, size = 'large' }: TCardProps) {
   const dispatch = useAppDispatch();
 
   const handleMouseOver = () => {
@@ -26,7 +25,7 @@ function Card({ offer, favoriteClass, block, size = 'large' }: TCardProps) {
   };
 
   return (
-    <article className={`${block}__card place-card`} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+    <article className={`${block}__card place-card`} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} data-testid={`${block}-card`}>
       {offer.isPremium &&
       <div className="place-card__mark">
         <span>Premium</span>
@@ -36,7 +35,7 @@ function Card({ offer, favoriteClass, block, size = 'large' }: TCardProps) {
           <img className="place-card__image" src={offer.previewImage} {...getImageSize(size)} alt="Place image"/>
         </Link>
       </div>
-      <div className={`${favoriteClass ? favoriteClass : ''} place-card__info`}>
+      <div className={`${block === 'favorites' ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
